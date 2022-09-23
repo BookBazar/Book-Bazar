@@ -1,0 +1,54 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background-color: #E1B107;
+  color: black;
+}
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.menu {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.2rem;
+  align-items: center;
+}
+.menu a {
+  color: black;
+  font-weight: 400;
+  transition: all 0.5s ease-in-out;
+  position: relative;
+}
+
+/* Responsive */
+input[type="checkbox"] {
+  display: none;
+}
+.hamburger {
+  display: none;
+  font-size: 2.4rem;
+  user-select: none;
+}
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    position: absolute;
+    background-color: #f5f3f4;
+    right: 0;
+    left: 0;
+    text-align: center;
+    padding: 1.5 0;
+  }
+  .menu li {
+    margin: 1.5rem 0;
+  }
+  input[type="checkbox"]:checked ~ .menu {
+    display: block;
+  }
+  .hamburger {
+    display: block;
+  }
+}

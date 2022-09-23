@@ -1,0 +1,34 @@
+.post__details {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 4px;
+}
+.post__body__image {
+  height: 100%;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+.post__body__image img {
+  width: 800px;
+  height: 400px;
+  object-fit: cover;
+}
+.detail_container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.detail_content {
+  display: flex;
+  flex-direction: column;
+}
+.detail_content strong{
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+}
+.action_btn_container{
+    margin: 2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
