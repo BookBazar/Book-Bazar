@@ -13,6 +13,7 @@ import { createProduct } from "../../../store/methods/sellerMethods";
 export default function CreateProduct({ history }) {
   const [bookName, setBookName] = useState("");
   const [authorName, setauthorName] = useState("");
+  const [category, setCategory] = useState("Others");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
 
@@ -63,6 +64,7 @@ export default function CreateProduct({ history }) {
         authorName,
         price,
         image,
+        category,
       })
     );
   };
@@ -90,7 +92,7 @@ export default function CreateProduct({ history }) {
                 <div className="col-6 p-15">
                   <div className="create_card">
                     <h3 className="card_h3">Add Book Details</h3>
-
+                    
                     <div className="group">
                       <label htmlFor="book">Book Name</label>
                       <input
@@ -124,7 +126,31 @@ export default function CreateProduct({ history }) {
                         value={price}
                       />
                     </div>
-
+                    <div className="group">
+                      <label htmlFor="category">Category</label>
+                      <select
+                        className="group__control"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option value="School Books">School Books</option>
+                        <option value="Medical Books">Medical Books</option>
+                        <option value="Engineering Books">
+                          Engineering Books
+                        </option>
+                        <option value="Accounting and Financial Books">
+                          Accounting and Financial Books
+                        </option>
+                        <option value="Dictionaries">Dictionaries</option>
+                        <option value="Novels">Novels</option>
+                        <option value="General Knowledge">
+                          General Knowledge
+                        </option>
+                        <option value="Biographies">Biographies</option>
+                        <option value="Argumentatives">Argumentatives</option>
+                        <option value="Others">Others</option>
+                      </select>
+                    </div>
                     <div className="group">
                       <label htmlFor="image" className="image__label">
                         Book Image

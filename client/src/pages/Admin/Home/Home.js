@@ -3,19 +3,21 @@ import React, { useEffect } from "react";
 //Dependencies
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import { Link, Route } from "react-router-dom";
 
 //styles and components
 import "./Home.css";
 import Sidebar from "../Sidebar/Sidebar";
 import { storeRequest } from "../../../store/methods/adminMethods";
-import { Link } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
+import Search from "../../../components/Search/Search";
 
-export default function Home() {
+export default function Home({ match }) {
   const dispatch = useDispatch();
   const { loading, errors, storeRequestData } = useSelector(
     (state) => state.StoreRequestReducer
   );
+  const keyword = match.params.keyword;
 
   //Displaying errors
   useEffect(() => {
@@ -25,8 +27,8 @@ export default function Home() {
   }, [errors]);
 
   useEffect(() => {
-    dispatch(storeRequest());
-  }, [dispatch]);
+    dispatch(storeRequest(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <div className="container_admin">
@@ -44,6 +46,11 @@ export default function Home() {
         <Sidebar />
       </div>
       <div className="content_panel">
+        <Route
+          render={({ history }) => (
+            <Search history={history} redirect="admin-store-request" search='store-request-search'/>
+          )}
+        />
         {!loading ? (
           storeRequestData.map((item) => (
             <div className=" ml-minus-15" key={item._id}>

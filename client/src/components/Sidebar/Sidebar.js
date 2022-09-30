@@ -12,9 +12,8 @@ import { BiStore } from "react-icons/bi";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { BsFillCartFill } from "react-icons/bs";
 
-
 export default function Sidebar() {
-  const { username } = useSelector((state) => state.UserInfoReducer);
+  const { username, isSeller } = useSelector((state) => state.UserInfoReducer);
 
   const dispatch = useDispatch();
 
@@ -31,24 +30,30 @@ export default function Sidebar() {
             <span className="sidebar_name">{username}</span>
           </li>
         </Link>
-        <Link to="/create-products">
-          <li>
-            <BsPlusLg className="sidebar_icon" />
-            <span className="sidebar_title">Add Products</span>
-          </li>
-        </Link>
-        <Link to="/store-details">
-          <li>
-            <BiStore className="sidebar_icon" />
-            <span className="sidebar_title">Store Details</span>
-          </li>
-        </Link>
-        <Link to="/seller-orders">
-          <li>
-            <BsFillCartFill className="sidebar_icon" />
-            <span className="sidebar_title">Orders</span>
-          </li>
-        </Link>
+        {isSeller ? (
+          <>
+            <Link to="/create-products">
+              <li>
+                <BsPlusLg className="sidebar_icon" />
+                <span className="sidebar_title">Add Products</span>
+              </li>
+            </Link>
+            <Link to="/store-details">
+              <li>
+                <BiStore className="sidebar_icon" />
+                <span className="sidebar_title">Store Details</span>
+              </li>
+            </Link>
+            <Link to="/seller-orders">
+              <li>
+                <BsFillCartFill className="sidebar_icon" />
+                <span className="sidebar_title">Orders</span>
+              </li>
+            </Link>
+          </>
+        ) : (
+          ""
+        )}
         <Link to="/setting">
           <li>
             <AiTwotoneSetting className="sidebar_icon" />

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 //Dependencies
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 //Styles and Components
@@ -12,12 +12,14 @@ import {
   getProducts,
   deleteProduct,
 } from "../../../store/methods/sellerMethods";
+import Search from "../../../components/Search/Search";
 
-export default function ViewProducts({ history }) {
+export default function ViewProducts({ match }) {
   const dispatch = useDispatch();
   const { loading, errors, products } = useSelector(
     (state) => state.FetchProductsReducer
   );
+  const keyword = match.params.keyword;
 
   //Displaying errors
   useEffect(() => {
@@ -28,8 +30,8 @@ export default function ViewProducts({ history }) {
 
   //Fetch Products
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getProducts(keyword));
+  }, [dispatch, keyword]);
 
   //Delete Request
   const handleDelete = (id) => {
@@ -53,6 +55,7 @@ export default function ViewProducts({ history }) {
         <Sidebar />
       </div>
       <div className="content_panel">
+        <Route render={({ history }) => <Search history={history} redirect='dashboard' search='product-search'/>} />
         {!loading ? (
           products.map((item) => (
             <div className=" ml-minus-15" key={item._id}>
@@ -68,6 +71,7 @@ export default function ViewProducts({ history }) {
                   <div className="item_content">
                     <h2>{item.bookName}</h2>
                     <h3>{item.authorName}</h3>
+                    <h3>{item.category}</h3>
                     <h3>PKR {item.price}</h3>
                   </div>
                   <div className="action_btn_container">

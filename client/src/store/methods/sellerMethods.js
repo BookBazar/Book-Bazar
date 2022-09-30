@@ -131,7 +131,7 @@ export const updateStore = (info) => {
   };
 };
 
-export const getProducts = () => {
+export const getProducts = (keyword = "") => {
   return async (dispatch, getState) => {
     const {
       LoginReducer: { token },
@@ -143,7 +143,10 @@ export const getProducts = () => {
     };
     try {
       dispatch({ type: FETCH_PRODUCTS_REQUEST });
-      const { data } = await axios.get("/api/seller/get-products", config);
+      const { data } = await axios.get(
+        `/api/seller/get-products?keyword=${keyword}`,
+        config
+      );
       dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: data.products });
     } catch (error) {
       console.log(error);

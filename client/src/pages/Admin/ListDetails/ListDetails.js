@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 
 //Styles and components
-import { specificStoreList } from "../../../store/methods/adminMethods";
+import {
+  specificStoreList,
+  blockUnblockStore,
+} from "../../../store/methods/adminMethods";
 import Loader from "../../../components/Loader/Loader";
 
 export default function ListDetails() {
@@ -15,6 +18,7 @@ export default function ListDetails() {
   const { loading, store, errors } = useSelector(
     (state) => state.SpecificStoreListReducer
   );
+
   //Displaying errors
   useEffect(() => {
     if (errors.length > 0) {
@@ -25,6 +29,12 @@ export default function ListDetails() {
   useEffect(() => {
     dispatch(specificStoreList(id));
   }, [dispatch, id]);
+
+  //Block and Unblock Seller
+  const handleBlockUnblock = (info) => {
+    dispatch(blockUnblockStore(info));
+    window.location.reload(false);
+  };
 
   return (
     <div>
@@ -68,6 +78,29 @@ export default function ListDetails() {
                   <span>
                     <strong>Location:</strong> {item.location}
                   </span>
+                </div>
+                <div className="action_btn_container">
+                  {item.isBlocked === false ? (
+                    <button
+                      type="submit"
+                      className="delete_btn"
+                      onClick={() =>
+                        handleBlockUnblock({ user: item.user, data: true })
+                      }
+                    >
+                      Block Seller
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="approve_btn"
+                      onClick={() =>
+                        handleBlockUnblock({ user: item.user, data: false })
+                      }
+                    >
+                      UnBlock Seller
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -14,6 +14,7 @@ import { getProduct, editStore } from "../../../store/methods/sellerMethods";
 export default function EditProduct() {
   const [bookName, setBookName] = useState("");
   const [authorName, setauthorName] = useState("");
+  const [category, setCategory] = useState("Others");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
 
@@ -72,7 +73,7 @@ export default function EditProduct() {
   //Edit Book
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editStore({ id, bookName, authorName, price, image }));
+    dispatch(editStore({ id, bookName, authorName, price, image, category }));
   };
 
   return (
@@ -130,6 +131,31 @@ export default function EditProduct() {
                         onChange={(e) => setPrice(e.target.value)}
                         value={price}
                       />
+                    </div>
+                    <div className="group">
+                      <label htmlFor="category">Category</label>
+                      <select
+                        className="group__control"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option value="School Books">School Books</option>
+                        <option value="Medical Books">Medical Books</option>
+                        <option value="Engineering Books">
+                          Engineering Books
+                        </option>
+                        <option value="Accounting and Financial Books">
+                          Accounting and Financial Books
+                        </option>
+                        <option value="Dictionaries">Dictionaries</option>
+                        <option value="Novels">Novels</option>
+                        <option value="General Knowledge">
+                          General Knowledge
+                        </option>
+                        <option value="Biographies">Biographies</option>
+                        <option value="Argumentatives">Argumentatives</option>
+                        <option value="Others">Others</option>
+                      </select>
                     </div>
                     <div className="group">
                       <label htmlFor="image" className="image__label">

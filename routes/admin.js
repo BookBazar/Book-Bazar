@@ -11,6 +11,7 @@ const {
   getStoreList,
   getSpecificStoreList,
   deleteStore,
+  blockUnblockSeller,
 } = require("../controllers/admin");
 
 const verifyAdmin = require("../middlewares/verifyAdmin");
@@ -24,6 +25,7 @@ router
   .get(verifyAdmin, getSpecificStoreRequest);
 router.route("/approve-request/:id").put(approveStore);
 router.route("/delete-request/:id").delete(deleteStore);
+router.route("/block-unblock-seller/:id").put(blockUnblockSeller);
 
 router.route("/store-list").get(verifyAdmin, getStoreList);
 router.route("/specific-store-list/:id").get(verifyAdmin, getSpecificStoreList);

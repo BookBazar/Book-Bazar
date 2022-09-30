@@ -89,9 +89,10 @@ module.exports.productValidations = [
     .withMessage("Author Name is required"),
   body("price").not().isEmpty().trim().withMessage("Price is required"),
   body("image").not().isEmpty().trim().withMessage("Image is required"),
+  body("category").not().isEmpty().trim().withMessage("Category is required"),
 ];
 exports.addProduct = async (req, res) => {
-  const { bookName, authorName, price, image } = req.body;
+  const { bookName, authorName, price, image, category } = req.body;
   const { _id } = req.user;
 
   const errors = validationResult(req);
@@ -106,6 +107,7 @@ exports.addProduct = async (req, res) => {
         authorName,
         price,
         image,
+        category,
       });
       return res
         .status(200)
@@ -178,8 +180,17 @@ exports.updateStore = async (req, res) => {
  * @access Private
  */
 exports.getProducts = async (req, res) => {
+  const keyword = req.query.keyword
+    ? {
+        bookName: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
   const { _id } = req.user;
-  const products = await productSchema.find({ user: { $eq: _id } });
+
+  const products = await productSchema.find({ user: { $eq: _id }, ...keyword });
   if (!products) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ products });
 };
@@ -210,9 +221,10 @@ module.exports.editProductValidations = [
     .withMessage("Author Name is required"),
   body("price").not().isEmpty().trim().withMessage("Price is required"),
   body("image").not().isEmpty().trim().withMessage("Image is required"),
+  body("category").not().isEmpty().trim().withMessage("Category is required"),
 ];
 exports.editProduct = async (req, res) => {
-  const { bookName, authorName, price, image } = req.body;
+  const { bookName, authorName, price, image, category } = req.body;
   const { id } = req.params;
 
   const errors = validationResult(req);
@@ -228,6 +240,7 @@ exports.editProduct = async (req, res) => {
           authorName,
           price,
           image,
+          category,
         },
         { new: true }
       );
@@ -243,7 +256,7 @@ exports.editProduct = async (req, res) => {
  * @route DELETE /api/admin/delete-product
  * @access Prvate
  */
-exports.deleteProduct= async (req, res) => {
+exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
   await productSchema.deleteOne({ _id: id });
   return res.status(200).json({ success: true });

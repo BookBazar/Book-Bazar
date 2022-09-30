@@ -33,8 +33,10 @@ export default function App() {
         <Switch>
           <AdminRoutes path="/admin-login" exact component={AdminLogin} />
           <AdminPrivate path='/admin-store-request' exact component={AdminHome} />
+          <AdminPrivate path='/store-request-search/:keyword'  component={AdminHome} />
           <AdminPrivate path='/request-details/:id' exact component={RequestDetails} />
           <AdminPrivate path='/admin-store-list' exact component={StoreList} />
+          <AdminPrivate path='/store-list-search/:keyword' component={StoreList} />
           <AdminPrivate path='/list-details/:id' exact component={ListDetails} />
 
           <RouteLink path="/login" exact component={Login} />
@@ -42,6 +44,7 @@ export default function App() {
           <PrivateRoute path="/homepage" exact component={Home} />
           <PrivateRoute path="/seller-form" exact component={SellerRequest} />
           <PrivateRoute path='/dashboard' exact component={ViewProducts} />
+          <PrivateRoute path='/product-search/:keyword' component={ViewProducts} />
           <PrivateRoute path='/create-products' exact component={CreateProduct} />
           <PrivateRoute path='/store-details' exact component={StoreDetails} />
           <PrivateRoute path='/edit-product/:id' exact component={EditProduct} />

@@ -3,18 +3,20 @@ import React, { useEffect } from "react";
 //Dependencies
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import { Link, Route } from "react-router-dom";
 
 //styles and components
 import Sidebar from "../Sidebar/Sidebar";
 import Loader from "../../../components/Loader/Loader";
 import { storeList } from "../../../store/methods/adminMethods";
-import { Link } from "react-router-dom";
+import Search from "../../../components/Search/Search";
 
-export default function StoreList() {
+export default function StoreList({ match }) {
   const dispatch = useDispatch();
   const { loading, errors, storeListData } = useSelector(
     (state) => state.StoreListReducer
   );
+  const keyword = match.params.keyword;
 
   //Displaying errors
   useEffect(() => {
@@ -24,8 +26,8 @@ export default function StoreList() {
   }, [errors]);
 
   useEffect(() => {
-    dispatch(storeList());
-  }, [dispatch]);
+    dispatch(storeList(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <div className="container_admin">
@@ -43,6 +45,16 @@ export default function StoreList() {
         <Sidebar />
       </div>
       <div className="content_panel">
+        <Route
+          render={({ history }) => (
+            <Search
+              history={history}
+              redirect="admin-store-list"
+              search="store-list-search"
+            />
+          )}
+        />
+
         {!loading ? (
           storeListData.map((item) => (
             <div className=" ml-minus-15" key={item._id}>

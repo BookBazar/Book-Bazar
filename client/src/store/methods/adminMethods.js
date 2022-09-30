@@ -21,6 +21,9 @@ import {
   ADMIN_DELETE_STORE_REQUEST,
   ADMIN_DELETE_STORE_SUCCESS,
   ADMIN_DELETE_STORE_FAIL,
+  ADMIN_BLOCK_UNBLOCK_STORE_REQUEST,
+  ADMIN_BLOCK_UNBLOCK_STORE_SUCCESS,
+  ADMIN_BLOCK_UNBLOCK_STORE_FAIL,
 } from "../constants/adminConstants";
 
 export const adminLogin = (info) => {
@@ -42,7 +45,7 @@ export const adminLogin = (info) => {
   };
 };
 
-export const storeRequest = () => {
+export const storeRequest = (keyword = "") => {
   return async (dispatch, getState) => {
     const {
       AdminLoginReducer: { token },
@@ -54,7 +57,10 @@ export const storeRequest = () => {
     };
     try {
       dispatch({ type: ADMIN_STORE_REQUEST_REQUEST });
-      const { data } = await axios.get("/api/admin/store-request", config);
+      const { data } = await axios.get(
+        `/api/admin/store-request?keyword=${keyword}`,
+        config
+      );
       dispatch({
         type: ADMIN_STORE_REQUEST_SUCCESS,
         payload: data.storeRequests,
@@ -125,6 +131,36 @@ export const approveStore = (user) => {
   };
 };
 
+export const blockUnblockStore = (info) => {
+  return async (dispatch, getState) => {
+    const {
+      AdminLoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      dispatch({ type: ADMIN_BLOCK_UNBLOCK_STORE_REQUEST });
+      await axios.put(
+        `/api/admin/block-unblock-seller/${info.user}`,
+        info,
+        config
+      );
+      dispatch({
+        type: ADMIN_BLOCK_UNBLOCK_STORE_SUCCESS,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ADMIN_BLOCK_UNBLOCK_STORE_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
 export const deleteStore = (id) => {
   return async (dispatch, getState) => {
     const {
@@ -151,7 +187,7 @@ export const deleteStore = (id) => {
   };
 };
 
-export const storeList = () => {
+export const storeList = (keyword = "") => {
   return async (dispatch, getState) => {
     const {
       AdminLoginReducer: { token },
@@ -163,7 +199,10 @@ export const storeList = () => {
     };
     try {
       dispatch({ type: ADMIN_STORE_LIST_REQUEST });
-      const { data } = await axios.get("/api/admin/store-list", config);
+      const { data } = await axios.get(
+        `/api/admin/store-list?keyword=${keyword}`,
+        config
+      );
       dispatch({
         type: ADMIN_STORE_LIST_SUCCESS,
         payload: data.storeList,

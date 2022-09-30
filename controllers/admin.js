@@ -96,7 +96,18 @@ exports.adminLogin = async (req, res) => {
  * @access Prvate
  */
 exports.getStoreRequest = async (req, res) => {
-  const storeRequests = await sellerModel.find({ isApproved: { $eq: false } });
+  const keyword = req.query.keyword
+    ? {
+        storeName: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+  const storeRequests = await sellerModel.find({
+    isApproved: { $eq: false },
+    ...keyword,
+  });
   if (!storeRequests)
     return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ storeRequests });
@@ -122,7 +133,10 @@ exports.getSpecificStoreRequest = async (req, res) => {
  */
 exports.approveStore = async (req, res) => {
   const { id } = req.params;
-  await sellerModel.updateOne({ user: id }, { isApproved: true });
+  await sellerModel.updateOne(
+    { user: id },
+    { isApproved: true, isBlocked: false }
+  );
   await userModel.updateOne({ _id: id }, { isSeller: true });
 
   return res.status(200).json({ success: true });
@@ -145,7 +159,18 @@ exports.deleteStore = async (req, res) => {
  * @access Prvate
  */
 exports.getStoreList = async (req, res) => {
-  const storeList = await sellerModel.find({ isApproved: { $eq: true } });
+  const keyword = req.query.keyword
+    ? {
+        storeName: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+  const storeList = await sellerModel.find({
+    isApproved: { $eq: true },
+    ...keyword,
+  });
   if (!storeList) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ storeList });
 };
@@ -160,4 +185,23 @@ exports.getSpecificStoreList = async (req, res) => {
   const store = await sellerModel.find({ _id: id });
   if (!store) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ store });
+};
+
+/**
+ * @description Block and Unblock Seller
+ * @route PUT /api/admin/block-unblock-seller
+ * @access Prvate
+ */
+exports.blockUnblockSeller = async (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+
+  await sellerModel.updateOne(
+    { user: { $eq: id } },
+    { isBlocked: data },
+    { new: true }
+  );
+  await userModel.updateOne({ _id: { $eq: id } }, { isSeller: !data });
+
+  return res.status(200).json({ success: true });
 };
