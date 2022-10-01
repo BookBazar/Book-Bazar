@@ -187,7 +187,7 @@ export const deleteStore = (id) => {
   };
 };
 
-export const storeList = (keyword = "") => {
+export const storeList = ({ keyword = "", value = "all" }) => {
   return async (dispatch, getState) => {
     const {
       AdminLoginReducer: { token },
@@ -200,7 +200,7 @@ export const storeList = (keyword = "") => {
     try {
       dispatch({ type: ADMIN_STORE_LIST_REQUEST });
       const { data } = await axios.get(
-        `/api/admin/store-list?keyword=${keyword}`,
+        `/api/admin/store-list?keyword=${keyword}&value=${value}`,
         config
       );
       dispatch({

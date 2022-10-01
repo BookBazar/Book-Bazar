@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 //Dependencies
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import { storeList } from "../../../store/methods/adminMethods";
 import Search from "../../../components/Search/Search";
 
 export default function StoreList({ match }) {
+  const [value, setValue] = useState("all");
+
   const dispatch = useDispatch();
   const { loading, errors, storeListData } = useSelector(
     (state) => state.StoreListReducer
@@ -26,8 +28,8 @@ export default function StoreList({ match }) {
   }, [errors]);
 
   useEffect(() => {
-    dispatch(storeList(keyword));
-  }, [dispatch, keyword]);
+    dispatch(storeList({ keyword, value }));
+  }, [dispatch, keyword, value]);
 
   return (
     <div className="container_admin">
@@ -54,7 +56,35 @@ export default function StoreList({ match }) {
             />
           )}
         />
-
+        <div className=" ml-minus-15">
+          <div className="col-8 p-15">
+            <h3 className="card_h3">Filters</h3>
+            <input
+              type="radio"
+              id="topping"
+              name="topping"
+              value="all"
+              onClick={() => setValue("all")}
+            />{" "}
+            All
+            <input
+              type="radio"
+              id="topping"
+              name="topping"
+              value="block"
+              onClick={() => setValue("block")}
+            />{" "}
+            Block
+            <input
+              type="radio"
+              id="topping"
+              name="topping"
+              value="unBlock"
+              onClick={() => setValue("unblock")}
+            />{" "}
+            Unblock
+          </div>
+        </div>
         {!loading ? (
           storeListData.map((item) => (
             <div className=" ml-minus-15" key={item._id}>

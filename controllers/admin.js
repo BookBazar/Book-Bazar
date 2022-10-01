@@ -167,12 +167,37 @@ exports.getStoreList = async (req, res) => {
         },
       }
     : {};
-  const storeList = await sellerModel.find({
-    isApproved: { $eq: true },
-    ...keyword,
-  });
-  if (!storeList) return res.status(401).json({ msg: "Something went wrong" });
-  return res.status(200).json({ storeList });
+  const value = req.query.value;
+
+  if (value === "all") {
+    const storeList = await sellerModel.find({
+      isApproved: { $eq: true },
+      ...keyword,
+    });
+    if (!storeList)
+      return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ storeList });
+  }
+  if (value === "block") {
+    const storeList = await sellerModel.find({
+      isApproved: { $eq: true },
+      isBlocked: { $eq: true },
+      ...keyword,
+    });
+    if (!storeList)
+      return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ storeList });
+  }
+  if (value === "unblock") {
+    const storeList = await sellerModel.find({
+      isApproved: { $eq: true },
+      isBlocked: { $eq: false },
+      ...keyword,
+    });
+    if (!storeList)
+      return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ storeList });
+  }
 };
 
 /**
