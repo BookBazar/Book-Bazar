@@ -90,9 +90,20 @@ module.exports.productValidations = [
   body("price").not().isEmpty().trim().withMessage("Price is required"),
   body("image").not().isEmpty().trim().withMessage("Image is required"),
   body("category").not().isEmpty().trim().withMessage("Category is required"),
+  body("condition").not().isEmpty().trim().withMessage("Condition is required"),
+  body("quantity").not().isEmpty().trim().withMessage("Quantity is required"),
 ];
 exports.addProduct = async (req, res) => {
-  const { bookName, authorName, price, image, category } = req.body;
+  const {
+    bookName,
+    authorName,
+    price,
+    image,
+    category,
+    condition,
+    description,
+    quantity,
+  } = req.body;
   const { _id } = req.user;
 
   const errors = validationResult(req);
@@ -108,6 +119,9 @@ exports.addProduct = async (req, res) => {
         price,
         image,
         category,
+        condition,
+        description,
+        quantity,
       });
       return res
         .status(200)
@@ -141,16 +155,21 @@ module.exports.updateValidations = [
     .isEmpty()
     .trim()
     .withMessage("Store Name is required"),
+  body("ownerName")
+    .not()
+    .isEmpty()
+    .trim()
+    .withMessage("Owner Name is required"),
   body("contact")
     .not()
     .isEmpty()
     .trim()
     .withMessage("Contact Number is required"),
-  body("email").not().isEmpty().trim().withMessage("Email is required"),
+  body("image").not().isEmpty().trim().withMessage("Image is required"),
   body("address").not().isEmpty().trim().withMessage("Address is required"),
 ];
 exports.updateStore = async (req, res) => {
-  const { storeName, email, contact, address } = req.body;
+  const { storeName, ownerName, contact, address, image, location } = req.body;
   const { _id } = req.user;
   const errors = validationResult(req);
 
@@ -162,9 +181,11 @@ exports.updateStore = async (req, res) => {
         { user: _id },
         {
           storeName,
-          email,
           contact,
           address,
+          image,
+          location,
+          ownerName
         }
       );
       return res.status(200).json({ msg: "Store Updated successfully" });
@@ -222,9 +243,20 @@ module.exports.editProductValidations = [
   body("price").not().isEmpty().trim().withMessage("Price is required"),
   body("image").not().isEmpty().trim().withMessage("Image is required"),
   body("category").not().isEmpty().trim().withMessage("Category is required"),
+  body("category").not().isEmpty().trim().withMessage("Category is required"),
+  body("quantity").not().isEmpty().trim().withMessage("Quantity is required"),
 ];
 exports.editProduct = async (req, res) => {
-  const { bookName, authorName, price, image, category } = req.body;
+  const {
+    bookName,
+    authorName,
+    price,
+    image,
+    category,
+    quantity,
+    condition,
+    description,
+  } = req.body;
   const { id } = req.params;
 
   const errors = validationResult(req);
@@ -241,6 +273,9 @@ exports.editProduct = async (req, res) => {
           price,
           image,
           category,
+          quantity,
+          condition,
+          description,
         },
         { new: true }
       );

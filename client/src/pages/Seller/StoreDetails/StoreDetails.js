@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 //Dependencies
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -11,9 +12,11 @@ import { getStore, updateStore } from "../../../store/methods/sellerMethods";
 
 export default function StoreDetails({ history }) {
   const [storeName, setStoreName] = useState("");
-  const [email, setEmail] = useState("");
+  const [ownerName, setOwnerName] = useState("");
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
+  const [location, setLocation] = useState("");
+  const [image, setImage] = useState("");
 
   const dispatch = useDispatch();
   const { specificStore } = useSelector((state) => state.FetchStoreReducer);
@@ -28,10 +31,30 @@ export default function StoreDetails({ history }) {
       dispatch(getStore());
     }
     setStoreName(specificStore.storeName);
-    setEmail(specificStore.email);
+    setOwnerName(specificStore.ownerName)
     setContact(specificStore.contact);
     setAddress(specificStore.address);
+    setLocation(specificStore.location)
   }, [dispatch, user, specificStore]);
+
+  //Image Upload Functionality
+  const fileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload/image", formData, config);
+      setImage(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   //Display Error
   useEffect(() => {
@@ -44,7 +67,7 @@ export default function StoreDetails({ history }) {
   useEffect(() => {
     if (success) {
       toast.success("Store Updated Successfully");
-    //   history.push("/dashboard");
+      //   history.push("/dashboard");
     }
   }, [success, history]);
 
@@ -54,9 +77,11 @@ export default function StoreDetails({ history }) {
     dispatch(
       updateStore({
         storeName,
-        email,
+        ownerName,
         contact,
         address,
+        location,
+        image
       })
     );
   };
@@ -96,14 +121,14 @@ export default function StoreDetails({ history }) {
                       />
                     </div>
                     <div className="group">
-                      <label htmlFor="email">Email</label>
+                      <label htmlFor="name">Owner Name</label>
                       <input
-                        type="email"
-                        id="email"
+                        type="text"
+                        id="name"
                         className="group__control"
-                        placeholder="Enter Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
+                        placeholder="Enter owner name"
+                        onChange={(e) => setOwnerName(e.target.value)}
+                        value={ownerName}
                       />
                     </div>
                     <div className="group">
@@ -126,6 +151,28 @@ export default function StoreDetails({ history }) {
                         placeholder="Enter Address"
                         onChange={(e) => setAddress(e.target.value)}
                         value={address}
+                      />
+                    </div>
+                    <div className="group">
+                      <label htmlFor="location">Location</label>
+                      <input
+                        type="text"
+                        id="location"
+                        className="group__control"
+                        placeholder="Enter Google Map Link"
+                        onChange={(e) => setLocation(e.target.value)}
+                        value={location}
+                      />
+                    </div>
+                    <div className="group">
+                      <label htmlFor="image" className="image__label">
+                        Store Image
+                      </label>
+                      <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        onChange={fileHandler}
                       />
                     </div>
                     <div className="group">

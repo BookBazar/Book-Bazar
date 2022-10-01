@@ -15,6 +15,9 @@ export default function CreateProduct({ history }) {
   const [authorName, setauthorName] = useState("");
   const [category, setCategory] = useState("Others");
   const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [description, setDescription] = useState("");
+  const [condition, setCondition] = useState("new");
   const [image, setImage] = useState("");
 
   const dispatch = useDispatch();
@@ -65,6 +68,9 @@ export default function CreateProduct({ history }) {
         price,
         image,
         category,
+        condition,
+        description, 
+        quantity
       })
     );
   };
@@ -92,7 +98,6 @@ export default function CreateProduct({ history }) {
                 <div className="col-6 p-15">
                   <div className="create_card">
                     <h3 className="card_h3">Add Book Details</h3>
-                    
                     <div className="group">
                       <label htmlFor="book">Book Name</label>
                       <input
@@ -127,6 +132,17 @@ export default function CreateProduct({ history }) {
                       />
                     </div>
                     <div className="group">
+                      <label htmlFor="quantity">Quantity</label>
+                      <input
+                        type="number"
+                        id="quantity"
+                        className="group__control"
+                        placeholder="Enter Quantity"
+                        onChange={(e) => setQuantity(e.target.value)}
+                        value={quantity}
+                      />
+                    </div>
+                    <div className="group">
                       <label htmlFor="category">Category</label>
                       <select
                         className="group__control"
@@ -150,6 +166,30 @@ export default function CreateProduct({ history }) {
                         <option value="Argumentatives">Argumentatives</option>
                         <option value="Others">Others</option>
                       </select>
+                    </div>
+                    <div className="group">
+                      <label htmlFor="category">Condition</label>
+                      <select
+                        className="group__control"
+                        value={condition}
+                        onChange={(e) => setCondition(e.target.value)}
+                      >
+                        <option value="new">New</option>
+                        <option value="old">Old</option>
+                      </select>
+                    </div>
+                    <div className="group">
+                      <label htmlFor="description">
+                        Description (Optional)
+                      </label>
+                      <textarea
+                        type="text"
+                        id="description"
+                        className="group__control"
+                        placeholder="Enter Description"
+                        onChange={(e) => setDescription(e.target.value)}
+                        value={description}
+                      />
                     </div>
                     <div className="group">
                       <label htmlFor="image" className="image__label">

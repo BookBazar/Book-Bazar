@@ -16,6 +16,9 @@ export default function EditProduct() {
   const [authorName, setauthorName] = useState("");
   const [category, setCategory] = useState("Others");
   const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [description, setDescription] = useState("");
+  const [condition, setCondition] = useState("new");
   const [image, setImage] = useState("");
 
   const dispatch = useDispatch();
@@ -34,6 +37,10 @@ export default function EditProduct() {
     setBookName(specificProduct.bookName);
     setauthorName(specificProduct.authorName);
     setPrice(specificProduct.price);
+    setQuantity(specificProduct.quantity)
+    setCategory(specificProduct.category)
+    setCondition(specificProduct.condition)
+    setDescription(specificProduct.description)
   }, [dispatch, specificProduct, id]);
 
   //Image Upload Functionality
@@ -73,7 +80,7 @@ export default function EditProduct() {
   //Edit Book
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editStore({ id, bookName, authorName, price, image, category }));
+    dispatch(editStore({ id, bookName, authorName, price, image, category, quantity, condition, description }));
   };
 
   return (
@@ -133,6 +140,17 @@ export default function EditProduct() {
                       />
                     </div>
                     <div className="group">
+                      <label htmlFor="quantity">Quantity</label>
+                      <input
+                        type="number"
+                        id="quantity"
+                        className="group__control"
+                        placeholder="Enter Quantity"
+                        onChange={(e) => setQuantity(e.target.value)}
+                        value={quantity}
+                      />
+                    </div>
+                    <div className="group">
                       <label htmlFor="category">Category</label>
                       <select
                         className="group__control"
@@ -156,6 +174,30 @@ export default function EditProduct() {
                         <option value="Argumentatives">Argumentatives</option>
                         <option value="Others">Others</option>
                       </select>
+                    </div>
+                    <div className="group">
+                      <label htmlFor="category">Condition</label>
+                      <select
+                        className="group__control"
+                        value={condition}
+                        onChange={(e) => setCondition(e.target.value)}
+                      >
+                        <option value="new">New</option>
+                        <option value="old">Old</option>
+                      </select>
+                    </div>
+                    <div className="group">
+                      <label htmlFor="description">
+                        Description
+                      </label>
+                      <textarea
+                        type="text"
+                        id="description"
+                        className="group__control"
+                        placeholder="Enter Description"
+                        onChange={(e) => setDescription(e.target.value)}
+                        value={description}
+                      />
                     </div>
                     <div className="group">
                       <label htmlFor="image" className="image__label">
