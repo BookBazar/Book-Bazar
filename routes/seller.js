@@ -13,6 +13,7 @@ const {
   editProductValidations,
   editProduct,
   deleteProduct,
+  getStores,
 } = require("../controllers/seller");
 
 router.route("/create-store").post(verifyUser, shopValidations, createShop);
@@ -25,5 +26,6 @@ router.route("/edit-product/:id").put(verifyUser, editProductValidations, editPr
 router.route('/get-products').get(verifyUser, getProducts)
 router.route('/get-product/:id').get(verifyUser, getProduct)
 router.route('/delete-product/:id').delete(verifyUser, deleteProduct)
+router.route('/get-stores').get(getStores)
 
 module.exports = router;

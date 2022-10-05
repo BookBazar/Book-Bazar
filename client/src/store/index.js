@@ -17,6 +17,7 @@ import {
   FetchProductReducer,
   EditProductReducer,
   DeleteProductReducer,
+  FetchStoresReducer,
 } from "./reducers/sellerReducers";
 
 import {
@@ -28,6 +29,14 @@ import {
   SpecificStoreListReducer,
   DeleteStoreReducer,
 } from "./reducers/adminReducers";
+
+import {
+  ProductsReducer,
+  ProductReducer,
+  cartReducer,
+} from "./reducers/productReducer";
+
+import { CreateOrderReducer } from "./reducers/orderReducer";
 
 const rootReducers = combineReducers({
   SignupReducer,
@@ -42,6 +51,7 @@ const rootReducers = combineReducers({
   FetchProductReducer,
   EditProductReducer,
   DeleteProductReducer,
+  FetchStoresReducer,
 
   AdminLoginReducer,
   StoreRequestReducer,
@@ -50,11 +60,38 @@ const rootReducers = combineReducers({
   DeleteStoreReducer,
   StoreListReducer,
   SpecificStoreListReducer,
+
+  ProductsReducer,
+  ProductReducer,
+  cartReducer,
+
+  CreateOrderReducer
 });
+
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
+  : {};
+
+const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
+  ? JSON.parse(localStorage.getItem("paymentMethod"))
+  : {};
+
+const initialState = {
+  cartReducer: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+    paymentMethod: paymentMethodFromStorage,
+  },
+};
 
 const middlewares = [thunkMiddleware];
 const Store = createStore(
   rootReducers,
+  initialState,
   composeWithDevTools(applyMiddleware(...middlewares))
 );
 export default Store;

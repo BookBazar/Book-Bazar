@@ -23,6 +23,9 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
+  FETCH_STORES_REQUEST,
+  FETCH_STORES_SUCCESS,
+  FETCH_STORES_FAIL,
 } from "../constants/sellerConstants";
 
 const initialState = {
@@ -30,6 +33,7 @@ const initialState = {
   success: false,
   errors: [],
   store: [],
+  stores: [],
   specificStore: {},
   specificProduct: {},
   product: [],
@@ -179,6 +183,25 @@ export const DeleteProductReducer = (state = initialState, action) => {
       errors: [],
     };
   } else if (type === DELETE_PRODUCT_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const FetchStoresReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === FETCH_STORES_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_STORES_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      stores: payload,
+      errors: [],
+    };
+  } else if (type === FETCH_STORES_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

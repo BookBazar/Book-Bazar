@@ -1,7 +1,7 @@
 import React from "react";
 
 //Depedencies
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 
 //components and styles
@@ -26,6 +26,13 @@ import CreateProduct from "./pages/Seller/CreateProduct/CreateProduct";
 import StoreDetails from "./pages/Seller/StoreDetails/StoreDetails";
 import EditProduct from "./pages/Seller/EditProduct/EditProduct";
 
+import Products from "./pages/User/Products/Products";
+import Detail from "./pages/User/ProductDetail/Detail";
+import Cart from "./pages/User/Cart/Cart";
+import Shipping from "./pages/User/Shipping/Shipping";
+import Payment from "./pages/User/Payment/Payment";
+import Summary from "./pages/User/Place Order/Summary";
+
 export default function App() {
   return (
     <Provider store={Store}>
@@ -39,6 +46,13 @@ export default function App() {
           <AdminPrivate path='/store-list-search/:keyword' component={StoreList} />
           <AdminPrivate path='/list-details/:id' exact component={ListDetails} />
 
+          <Route path='/products/:id' exact component={Products}/>
+          <Route path='/product/:id' exact component={Detail} />
+          <Route path='/cart/:id?' exact component={Cart} /> 
+          <PrivateRoute path="/shipping" exact component={Shipping} />
+          <PrivateRoute path="/payment" exact component={Payment} />
+          <PrivateRoute path="/placeorder" exact component={Summary} />
+
           <RouteLink path="/login" exact component={Login} />
           <RouteLink path="/signup" exact component={Register} />
           <PrivateRoute path="/homepage" exact component={Home} />
@@ -48,7 +62,6 @@ export default function App() {
           <PrivateRoute path='/create-products' exact component={CreateProduct} />
           <PrivateRoute path='/store-details' exact component={StoreDetails} />
           <PrivateRoute path='/edit-product/:id' exact component={EditProduct} />
-
         </Switch>
       </BrowserRouter>
     </Provider>

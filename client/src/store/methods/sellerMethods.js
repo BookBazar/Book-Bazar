@@ -25,6 +25,9 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
+  FETCH_STORES_REQUEST,
+  FETCH_STORES_SUCCESS,
+  FETCH_STORES_FAIL,
 } from "../constants/sellerConstants";
 
 export const createStore = (info) => {
@@ -226,6 +229,24 @@ export const deleteProduct = (id) => {
         type: DELETE_PRODUCT_FAIL,
         payload: error.response.data.errors,
       });
+    }
+  };
+};
+
+export const getStores = () => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      dispatch({ type: FETCH_STORES_REQUEST });
+      const { data } = await axios.get("/api/seller/get-stores", config);
+      dispatch({ type: FETCH_STORES_SUCCESS, payload: data.stores });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: FETCH_STORES_FAIL, payload: error.response.data.errors });
     }
   };
 };

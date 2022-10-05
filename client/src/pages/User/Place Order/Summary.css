@@ -1,0 +1,50 @@
+.summary_container {
+  width: 100%;
+  max-width: 70%;
+  margin: 3rem auto;
+  display: flex;
+}
+.summary_title_h2 {
+  display: block;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: #343a40;
+  margin: 0;
+  padding: 2rem 0;
+}
+.summary_subtitle {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.summary_content {
+  width: 60%;
+}
+.summary_item_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+.summary_item_image {
+  width: 10%;
+}
+.summary_item_image img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 15%;
+  box-shadow: 0 10px 20px 1px grey;
+}
+.summary_item_name {
+  width: 30%;
+}
+.summary_item_price {
+  width: 30%;
+}
+.summary_calculation {
+  width: 20%;
+}
+.summary_calculation_styles {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+}

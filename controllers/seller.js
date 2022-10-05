@@ -185,7 +185,7 @@ exports.updateStore = async (req, res) => {
           address,
           image,
           location,
-          ownerName
+          ownerName,
         }
       );
       return res.status(200).json({ msg: "Store Updated successfully" });
@@ -295,4 +295,18 @@ exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
   await productSchema.deleteOne({ _id: id });
   return res.status(200).json({ success: true });
+};
+
+/**
+ * @description Get all stores
+ * @route GET /api/admin/get-stores
+ * @access Public
+ */
+exports.getStores = async (req, res) => {
+  try {
+    const stores = await sellerModel.find({}).sort({ updatedAt: -1 });
+    return res.status(200).json({ stores });
+  } catch (error) {
+    return res.status(500).json({ errors: error, msg: error.message });
+  }
 };
