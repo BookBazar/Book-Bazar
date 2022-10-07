@@ -6,14 +6,15 @@ import { Link, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
 
 //Styles and components
-import './Details.css'
+import "./Details.css";
 import { getProduct } from "../../../store/methods/productMethods";
 
-export default function Detail({history,}) {
+export default function Detail({ history }) {
   const [qty, setQty] = useState(1);
   const { product, loading } = useSelector((state) => state.ProductReducer);
   const dispatch = useDispatch();
   const { id } = useParams();
+
 
   //Fetch Products
   useEffect(() => {
@@ -21,11 +22,11 @@ export default function Detail({history,}) {
   }, [dispatch, id]);
 
   //Functions
-  const addToCartHandler = () =>{
-    history.push(`/cart/${id}?qty=${qty}`)
-  }
+  const addToCartHandler = () => {
+    history.push(`/cart/${id}?qty=${qty}`);
+  };
 
-   return (
+  return (
     <div className="product_main">
       <Link className="btn" to="/">
         Go Back
@@ -89,4 +90,3 @@ export default function Detail({history,}) {
     </div>
   );
 }
-

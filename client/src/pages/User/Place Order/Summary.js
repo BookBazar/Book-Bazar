@@ -38,14 +38,12 @@ export default function Summary({ history }) {
     Number(cart.taxPrice)
   ).toFixed(2);
 
-  const { loading, success, order } = useSelector(
-    (state) => state.CreateOrderReducer
-  );
+  const { loading, success } = useSelector((state) => state.CreateOrderReducer);
 
   //Cleaning up
   useEffect(() => {
     if (success) {
-      history.push('/homepage');
+      history.push("/homepage");
       dispatch({ type: ORDER_CREATE_RESET });
     }
     // eslint-disable-next-line
@@ -58,10 +56,6 @@ export default function Summary({ history }) {
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
       })
     );
   };

@@ -44,7 +44,7 @@ export default function Sidebar() {
                 <span className="sidebar_title">Store Details</span>
               </li>
             </Link>
-            <Link to="/seller-orders">
+            <Link to="/orders-dashboard">
               <li>
                 <BsFillCartFill className="sidebar_icon" />
                 <span className="sidebar_title">Orders</span>

@@ -21,10 +21,13 @@ import AdminHome from './pages/Admin/Home/Home'
 import RequestDetails from "./pages/Admin/RequestDetails/RequestDetails";
 import StoreList from "./pages/Admin/StoreList/StoreList";
 import ListDetails from "./pages/Admin/ListDetails/ListDetails";
+
 import ViewProducts from "./pages/Seller/ViewProducts/ViewProducts";
 import CreateProduct from "./pages/Seller/CreateProduct/CreateProduct";
 import StoreDetails from "./pages/Seller/StoreDetails/StoreDetails";
 import EditProduct from "./pages/Seller/EditProduct/EditProduct";
+import Orders from "./pages/Seller/Orders/Orders";
+import OrderDetail from "./pages/Seller/OrderDetail/Detail";
 
 import Products from "./pages/User/Products/Products";
 import Detail from "./pages/User/ProductDetail/Detail";
@@ -62,6 +65,9 @@ export default function App() {
           <PrivateRoute path='/create-products' exact component={CreateProduct} />
           <PrivateRoute path='/store-details' exact component={StoreDetails} />
           <PrivateRoute path='/edit-product/:id' exact component={EditProduct} />
+          <PrivateRoute path='/orders-dashboard' exact component={Orders} />
+          <PrivateRoute path='/order-detail/:id' exact component={OrderDetail} />
+
         </Switch>
       </BrowserRouter>
     </Provider>
