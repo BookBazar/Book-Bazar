@@ -37,19 +37,20 @@ import Payment from "./pages/User/Payment/Payment";
 import Summary from "./pages/User/Place Order/Summary";
 
 export default function App() {
-  return (
+  return (  
     <Provider store={Store}>
       <BrowserRouter>
         <Switch>
           <AdminRoutes path="/admin-login" exact component={AdminLogin} />
           <AdminPrivate path='/admin-store-request' exact component={AdminHome} />
-          <AdminPrivate path='/store-request-search/:keyword'  component={AdminHome} />
+          <AdminPrivate path='/store-request-search/:keyword' component={AdminHome} />
           <AdminPrivate path='/request-details/:id' exact component={RequestDetails} />
           <AdminPrivate path='/admin-store-list' exact component={StoreList} />
           <AdminPrivate path='/store-list-search/:keyword' component={StoreList} />
           <AdminPrivate path='/list-details/:id' exact component={ListDetails} />
 
           <Route path='/products/:id' exact component={Products}/>
+          <PrivateRoute path="/store-products-search/:keyword" component={Products} />
           <Route path='/product/:id' exact component={Detail} />
           <Route path='/cart/:id?' exact component={Cart} /> 
           <PrivateRoute path="/shipping" exact component={Shipping} />
@@ -59,6 +60,7 @@ export default function App() {
           <RouteLink path="/login" exact component={Login} />
           <RouteLink path="/signup" exact component={Register} />
           <PrivateRoute path="/homepage" exact component={Home} />
+          <PrivateRoute path="/store-search/:keyword" component={Home} />
           <PrivateRoute path="/seller-form" exact component={SellerRequest} />
           <PrivateRoute path='/dashboard' exact component={ViewProducts} />
           <PrivateRoute path='/product-search/:keyword' component={ViewProducts} />
@@ -67,7 +69,6 @@ export default function App() {
           <PrivateRoute path='/edit-product/:id' exact component={EditProduct} />
           <PrivateRoute path='/orders-dashboard' exact component={Orders} />
           <PrivateRoute path='/order-detail/:id' exact component={OrderDetail} />
-
         </Switch>
       </BrowserRouter>
     </Provider>

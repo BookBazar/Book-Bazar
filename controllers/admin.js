@@ -5,9 +5,7 @@ const userModel = require("../models/User");
 const generateToken = require("../utils/generateToken");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
-const {
-  Types: { ObjectId },
-} = require("mongoose");
+
 
 /**
  * @description Register

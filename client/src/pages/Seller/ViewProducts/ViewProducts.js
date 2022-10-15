@@ -55,7 +55,15 @@ export default function ViewProducts({ match }) {
         <Sidebar />
       </div>
       <div className="content_panel">
-        <Route render={({ history }) => <Search history={history} redirect='dashboard' search='product-search'/>} />
+        <Route
+          render={({ history }) => (
+            <Search
+              history={history}
+              redirect="dashboard"
+              search="product-search"
+            />
+          )}
+        />
         {!loading ? (
           products.map((item) => (
             <div className=" ml-minus-15" key={item._id}>
@@ -66,16 +74,30 @@ export default function ViewProducts({ match }) {
                       src={item.image}
                       alt={item.storeName}
                       className="item_image"
-                      style={{'width': '200px', 'height': '300px', 'objectFit': 'cover'}}
+                      style={{
+                        width: "200px",
+                        height: "300px",
+                        objectFit: "cover",
+                      }}
                     />
                   </div>
                   <div className="item_content">
                     <h2>{item.bookName}</h2>
-                    <h3><strong>Author</strong> {item.authorName}</h3>
-                    <h3><strong>Category</strong> {item.category}</h3>
-                    <h3><strong>Condition</strong> {item.condition}</h3>
-                    <h3><strong>Quantity</strong> {item.quantity}</h3>
-                    <h3><strong>PKR</strong>  {item.price}</h3>
+                    <h3>
+                      <strong>Author</strong> {item.authorName}
+                    </h3>
+                    <h3>
+                      <strong>Category</strong> {item.category}
+                    </h3>
+                    <h3>
+                      <strong>Condition</strong> {item.condition}
+                    </h3>
+                    <h3>
+                      <strong>Quantity</strong> {item.quantity}
+                    </h3>
+                    <h3>
+                      <strong>PKR</strong> {item.price}
+                    </h3>
                     <h3>{item.description}</h3>
                   </div>
                   <div className="action_btn_container">

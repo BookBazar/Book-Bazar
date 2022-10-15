@@ -28,6 +28,9 @@ import {
   FETCH_STORES_REQUEST,
   FETCH_STORES_SUCCESS,
   FETCH_STORES_FAIL,
+  CREATE_REVIEW_REQUEST,
+  CREATE_REVIEW_SUCCESS,
+  CREATE_REVIEW_FAIL,
 } from "../constants/sellerConstants";
 
 export const createStore = (info) => {
@@ -233,7 +236,7 @@ export const deleteProduct = (id) => {
   };
 };
 
-export const getStores = () => {
+export const getStores = (keyword = "") => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -242,11 +245,48 @@ export const getStores = () => {
     };
     try {
       dispatch({ type: FETCH_STORES_REQUEST });
-      const { data } = await axios.get("/api/seller/get-stores", config);
+      const { data } = await axios.get(
+        `/api/seller/get-stores?keyword=${keyword}`,
+        config
+      );
       dispatch({ type: FETCH_STORES_SUCCESS, payload: data.stores });
     } catch (error) {
       console.log(error);
-      dispatch({ type: FETCH_STORES_FAIL, payload: error.response.data.errors });
+      dispatch({
+        type: FETCH_STORES_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const createReview = (info) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      dispatch({
+        type: CREATE_REVIEW_REQUEST,
+      });
+
+      await axios.post(`/api/seller/create-review/${info.id}`, info, config);
+
+      dispatch({
+        type: CREATE_REVIEW_SUCCESS,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: CREATE_REVIEW_FAIL,
+        payload: error.response.data.errors,
+      });
     }
   };
 };

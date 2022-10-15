@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/" style={{ color: "black" }}>
+      <Link to="/homepage" style={{ color: "black" }}>
         <div className="logo">Urdu Bazar</div>
       </Link>
       <ul className="nav_links">

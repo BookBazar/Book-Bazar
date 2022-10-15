@@ -2,6 +2,9 @@ const sellerModel = require("../models/Seller");
 const productSchema = require("../models/Product");
 
 const { body, validationResult } = require("express-validator");
+const {
+  Types: { ObjectId },
+} = require("mongoose");
 
 /**
  * @description Create shop
@@ -303,10 +306,61 @@ exports.deleteProduct = async (req, res) => {
  * @access Public
  */
 exports.getStores = async (req, res) => {
+  const keyword = req.query.keyword
+    ? {
+        storeName: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
   try {
-    const stores = await sellerModel.find({}).sort({ updatedAt: -1 });
+    const stores = await sellerModel
+      .find({ ...keyword })
+      .sort({ updatedAt: -1 });
     return res.status(200).json({ stores });
   } catch (error) {
     return res.status(500).json({ errors: error, msg: error.message });
+  }
+};
+
+/**
+ * @description Create Review
+ * @route GET /api/seller/create-review
+ * @access Private
+ */
+module.exports.createReview = async (req, res) => {
+  const { _id } = req.user;
+  const { rating } = req.body;
+  const { id } = req.params;
+
+  const seller = await sellerModel.findOne({ user: { $eq: ObjectId(id) } });
+
+  if (seller) {
+    const alreadyReviewed = seller.review.find(
+      (r) => r.user.toString() === _id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400).json({ msg: "Product already reviewed" });
+    }
+
+    const review = {
+      rating: Number(rating),
+      user: _id,
+    };
+
+    seller.review.push(review);
+
+    seller.numReviews = seller.review.length;
+
+    seller.rating =
+      seller.review.reduce((acc, item) => item.rating + acc, 0) /
+      seller.review.length;
+
+    await seller.save();
+    res.status(201).json({ mesg: "Review added" });
+  } else {
+    res.status(404).json({ msg: "Product not found" });
   }
 };

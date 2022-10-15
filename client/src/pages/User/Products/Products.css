@@ -1,0 +1,14 @@
+.products_content {
+  width: 40%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.products_reviews{
+    width: 20%;
+    max-height: 18rem;
+    box-shadow: 0 10px 20px 1px grey;
+    margin: 0 3rem;
+    padding: 2rem 10rem 2rem 2rem;
+}

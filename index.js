@@ -19,6 +19,7 @@ connect();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.json())
 
 //connecting routes
 app.use('/api', apiRouter)

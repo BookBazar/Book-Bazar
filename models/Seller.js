@@ -6,6 +6,26 @@ const sellerSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
+  review: [
+    {
+      rating: { type: Number, required: true },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "user",
+      },
+    },
+  ],
+  rating: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  numReviews: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   storeName: {
     type: String,
     required: true,
@@ -47,9 +67,9 @@ const sellerSchema = new mongoose.Schema({
     default: false,
   },
   isBlocked: {
-    type: Boolean, 
-    default: false 
-  }
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("seller", sellerSchema);

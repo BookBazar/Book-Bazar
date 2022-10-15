@@ -18,6 +18,7 @@ import {
   EditProductReducer,
   DeleteProductReducer,
   FetchStoresReducer,
+  CreateReviewReducer
 } from "./reducers/sellerReducers";
 
 import {
@@ -59,7 +60,8 @@ const rootReducers = combineReducers({
   EditProductReducer,
   DeleteProductReducer,
   FetchStoresReducer,
-
+  CreateReviewReducer,
+  
   AdminLoginReducer,
   StoreRequestReducer,
   SpecificStoreReducer,

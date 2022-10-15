@@ -1,4 +1,7 @@
 const productModel = require("../models/Product");
+const {
+  Types: { ObjectId },
+} = require("mongoose");
 
 /**
  * @description Get Products List
@@ -8,9 +11,14 @@ const productModel = require("../models/Product");
 module.exports.getProducts = async (req, res) => {
   const { id } = req.params;
   try {
-    const products = await productModel.find({ user: { $eq: id } });
-    if(!products) return res.status(401).json({success: false, msg: "Products not found"})
-    return res.status(200).json({success: true, products})
+    const products = await productModel.find({
+      user: { $eq: ObjectId(id) },
+    });
+    if (!products)
+      return res
+        .status(401)
+        .json({ success: false, msg: "Products not found" });
+    return res.status(200).json({ success: true, products });
   } catch (error) {
     return res.status(500).json({ errors: error, success: false });
   }
@@ -21,12 +29,13 @@ module.exports.getProducts = async (req, res) => {
  * @route GET /api/product/get-product
  * @access Public
  */
- module.exports.getProduct = async (req, res) => {
+module.exports.getProduct = async (req, res) => {
   const { id } = req.params;
   try {
     const product = await productModel.findOne({ _id: { $eq: id } });
-    if(!product) return res.status(401).json({success: false, msg: "Product not found"})
-    return res.status(200).json({success: true, product})
+    if (!product)
+      return res.status(401).json({ success: false, msg: "Product not found" });
+    return res.status(200).json({ success: true, product });
   } catch (error) {
     return res.status(500).json({ errors: error, success: false });
   }
