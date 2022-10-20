@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 //Styles and components
 import { userRegister } from "../../store/methods/authMethods";
 
-export default function Register() {
+export default function Register({ history }) {
   //States
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -30,8 +30,9 @@ export default function Register() {
   useEffect(() => {
     if (success) {
       toast.success("Account Created Successfully");
+      history.push("/login");
     }
-  }, [success]);
+  }, [success, history]);
 
   //Functions
   const handleSubmit = (e) => {
@@ -41,12 +42,17 @@ export default function Register() {
       return;
     }
 
-    dispatch(userRegister({ username, email, password }));
+    setEmail(email);
+    setPassword(password);
+    setConfirmPassword(confirmPassword);
+    setUsername(username);
 
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setUsername("");
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email.match(mailformat)) {
+      dispatch(userRegister({ username, email, password }));
+    } else {
+      toast.error("Invalid Email");
+    }
   };
 
   return (

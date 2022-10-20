@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 //Styles and components
 import "./Form.css";
 import Navbar from "../../../components/Navbar/Navbar";
-import Loader from '../../../components/Loader/Loader'
+import Loader from "../../../components/Loader/Loader";
 import { createStore } from "../../../store/methods/sellerMethods";
 
 export default function Form({ history }) {
@@ -21,7 +21,7 @@ export default function Form({ history }) {
   const [address, setAddress] = useState("");
   const [location, setLocation] = useState("");
   const [image, setImage] = useState("");
-  const [isCustomer, setIsCustomer] = useState(false);
+  const [isCustomer, setIsCustomer] = useState("");
 
   const dispatch = useDispatch();
   const { loading, success, errors } = useSelector(
@@ -195,16 +195,22 @@ export default function Form({ history }) {
                     <div>
                       <input
                         type="radio"
-                        onChange={() => setIsCustomer(true)}
-                      />
-                      <span>Yes</span>
+                        id="topping"
+                        name="topping"
+                        value="Yes"
+                        onClick={() => setIsCustomer("Yes")}
+                      />{" "}
+                      Yes
                     </div>
                     <div>
                       <input
                         type="radio"
-                        onChange={() => setIsCustomer(false)}
-                      />
-                      <span>No</span>
+                        id="topping"
+                        name="topping"
+                        value="No"
+                        onClick={() => setIsCustomer("No")}
+                      />{" "}
+                      No
                     </div>
                   </div>
                   <div className="group">

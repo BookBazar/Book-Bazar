@@ -1,7 +1,7 @@
 import React from "react";
 
 //Depedencies
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 //styles and components
@@ -19,29 +19,31 @@ export default function Sidebar() {
   };
 
   return (
-    <nav className="sidebar">
-      <ul className="sidebar_ul">
-        <li>
-          <span className="sidebar_name">Urdu Bazar</span>
-        </li>
-        <Link to="/admin-store-list">
+    <div className="sidebar">
+      <nav className="links">
+        <ul className="sidebar_ul">
           <li>
-            <BsListNested className="sidebar_icon" />
-            <span className="sidebar_title">Store List</span>
+            <span className="sidebar_name">Urdu Bazar</span>
           </li>
-        </Link>
-        <Link to="/admin-store-request">
-          <li>
-            <MdOutlinePendingActions className="sidebar_icon" />
-            <span className="sidebar_title">Store Request</span>
+          <NavLink to="/admin-store-list">
+            <li>
+              <BsListNested className="sidebar_icon" />
+              <span className="sidebar_title">Store List</span>
+            </li>
+          </NavLink>
+          <NavLink to="/admin-store-request">
+            <li>
+              <MdOutlinePendingActions className="sidebar_icon" />
+              <span className="sidebar_title">Store Request</span>
+            </li>
+          </NavLink>
+          <li className="logout_btn">
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
           </li>
-        </Link>
-        <li>
-          <button className="btn" onClick={logout}>
-            Logout
-          </button>
-        </li>
-      </ul>
-    </nav>
+        </ul>
+      </nav>
+    </div>
   );
 }

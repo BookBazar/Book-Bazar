@@ -32,10 +32,11 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(userLogin({ email, password }));
+    
+    setEmail(email);
+    setPassword(password);
 
-    setEmail("");
-    setPassword("");
+    dispatch(userLogin({ email, password }));
   };
 
   return (

@@ -49,20 +49,18 @@ export const SignupReducer = (state = initialState, action) => {
   if (type === USER_SIGNUP_REQUEST) {
     return { ...state, loading: true };
   } else if (type === USER_SIGNUP_SUCCESS) {
-    const decoded = verifyToken(payload);
-    const { id } = decoded;
     return {
       ...state,
       loading: false,
       success: true,
-      token: payload,
-      user: id,
       errors: [],
     };
   } else if (type === USER_SIGNUP_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else if (type === USER_LOGOUT) {
     localStorage.removeItem("USER_TOKEN");
+    localStorage.removeItem("paymentMethod");
+    localStorage.removeItem("shippingAddress");
     return { ...state, token: "", user: "", username: "" };
   } else {
     return state;
@@ -88,6 +86,8 @@ export const LoginReducer = (state = initialState, action) => {
     return { ...state, loading: false, success: false, errors: payload };
   } else if (type === USER_LOGOUT) {
     localStorage.removeItem("USER_TOKEN");
+    localStorage.removeItem("paymentMethod");
+    localStorage.removeItem("shippingAddress");
     return { ...state, token: "", user: "", username: "" };
   } else {
     return state;

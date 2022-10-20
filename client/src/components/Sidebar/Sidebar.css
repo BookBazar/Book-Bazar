@@ -22,6 +22,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   padding-left: 1rem;
+  margin-top: 1.5rem;
 }
 .sidebar_ul {
   display: flex;
@@ -35,6 +36,20 @@
 }
 .sidebar_icon {
   font-size: 2rem;
+  margin-top: 1.5rem;
+  margin-left: 0.5rem;
+}
+.sidebar .links a.active {
+  color: #555;
+  background: white;
+  border-radius: 20px 0 0 20px;
+}
+
+.logout_btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
 @media screen and (max-width: 800px) {

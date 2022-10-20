@@ -95,6 +95,7 @@ module.exports.productValidations = [
   body("category").not().isEmpty().trim().withMessage("Category is required"),
   body("condition").not().isEmpty().trim().withMessage("Condition is required"),
   body("quantity").not().isEmpty().trim().withMessage("Quantity is required"),
+  body("edition").not().isEmpty().trim().withMessage("Edition is required"),
 ];
 exports.addProduct = async (req, res) => {
   const {
@@ -106,6 +107,8 @@ exports.addProduct = async (req, res) => {
     condition,
     description,
     quantity,
+    edition,
+    isbn,
   } = req.body;
   const { _id } = req.user;
 
@@ -125,6 +128,8 @@ exports.addProduct = async (req, res) => {
         condition,
         description,
         quantity,
+        edition,
+        isbn,
       });
       return res
         .status(200)
@@ -248,6 +253,7 @@ module.exports.editProductValidations = [
   body("category").not().isEmpty().trim().withMessage("Category is required"),
   body("category").not().isEmpty().trim().withMessage("Category is required"),
   body("quantity").not().isEmpty().trim().withMessage("Quantity is required"),
+  body("edition").not().isEmpty().trim().withMessage("Edition is required"),
 ];
 exports.editProduct = async (req, res) => {
   const {
@@ -259,6 +265,8 @@ exports.editProduct = async (req, res) => {
     quantity,
     condition,
     description,
+    edition,
+    isbn,
   } = req.body;
   const { id } = req.params;
 
@@ -279,6 +287,8 @@ exports.editProduct = async (req, res) => {
           quantity,
           condition,
           description,
+          isbn,
+          edition,
         },
         { new: true }
       );
@@ -316,7 +326,7 @@ exports.getStores = async (req, res) => {
     : {};
   try {
     const stores = await sellerModel
-      .find({ ...keyword })
+      .find({ ...keyword, isApproved: true, isBlocked: false })
       .sort({ updatedAt: -1 });
     return res.status(200).json({ stores });
   } catch (error) {

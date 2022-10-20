@@ -15,7 +15,6 @@ export default function Detail({ history }) {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-
   //Fetch Products
   useEffect(() => {
     dispatch(getProduct(id));
@@ -28,7 +27,7 @@ export default function Detail({ history }) {
 
   return (
     <div className="product_main">
-      <Link className="btn" to="/">
+      <Link className="btn" to="/homepage">
         Go Back
       </Link>
       {loading ? (
@@ -41,6 +40,10 @@ export default function Detail({ history }) {
           <div className="product_details">
             <h3>{product.bookName}</h3>
             <p className="product_price">Price: PKR {product.price}</p>
+            <p className="product_description">Edition: {product.edition}</p>
+            {product.isbn && (
+              <p className="product_description">ISBN: {product.isbn}</p>
+            )}
             <p className="product_description">
               Description: {product.description}
             </p>
@@ -64,7 +67,7 @@ export default function Detail({ history }) {
                   onChange={(e) => setQty(e.target.value)}
                   style={{ marginTop: "0.5rem", paddingLeft: "2rem" }}
                 >
-                  {[...Array(product.quantity).keys()].map((x) => (
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((x) => (
                     <option key={x + 1} value={x + 1}>
                       {x + 1}
                     </option>

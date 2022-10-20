@@ -34,6 +34,14 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  edition: {
+    type: Number,
+    required: true,
+  },
+  isbn: {
+    type: String,
+    required: true,
+  },
   image: {
     type: String,
     required: true,

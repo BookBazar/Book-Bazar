@@ -58,9 +58,8 @@ const sellerSchema = new mongoose.Schema({
     required: true,
   },
   isCustomer: {
-    type: Boolean,
+    type: String,
     required: true,
-    default: false,
   },
   isApproved: {
     type: Boolean,

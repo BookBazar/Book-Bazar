@@ -19,6 +19,8 @@ export default function EditProduct() {
   const [quantity, setQuantity] = useState(0);
   const [description, setDescription] = useState("");
   const [condition, setCondition] = useState("new");
+  const [edition, setEdition] = useState(0.0);
+  const [isbn, setIsbn] = useState("");
   const [image, setImage] = useState("");
 
   const dispatch = useDispatch();
@@ -37,10 +39,12 @@ export default function EditProduct() {
     setBookName(specificProduct.bookName);
     setauthorName(specificProduct.authorName);
     setPrice(specificProduct.price);
-    setQuantity(specificProduct.quantity)
-    setCategory(specificProduct.category)
-    setCondition(specificProduct.condition)
-    setDescription(specificProduct.description)
+    setQuantity(specificProduct.quantity);
+    setCategory(specificProduct.category);
+    setCondition(specificProduct.condition);
+    setDescription(specificProduct.description);
+    setIsbn(specificProduct.isbn);
+    setEdition(specificProduct.edition);
   }, [dispatch, specificProduct, id]);
 
   //Image Upload Functionality
@@ -80,7 +84,21 @@ export default function EditProduct() {
   //Edit Book
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editStore({ id, bookName, authorName, price, image, category, quantity, condition, description }));
+    dispatch(
+      editStore({
+        id,
+        bookName,
+        authorName,
+        price,
+        image,
+        category,
+        quantity,
+        condition,
+        description,
+        isbn,
+        edition,
+      })
+    );
   };
 
   return (
@@ -151,6 +169,28 @@ export default function EditProduct() {
                       />
                     </div>
                     <div className="group">
+                      <label htmlFor="isbn">ISBN Number (Optional)</label>
+                      <input
+                        type="text"
+                        id="isbn"
+                        className="group__control"
+                        placeholder="Enter ISBN"
+                        onChange={(e) => setIsbn(e.target.value)}
+                        value={isbn}
+                      />
+                    </div>
+                    <div className="group">
+                      <label htmlFor="edition">Edition</label>
+                      <input
+                        type="number"
+                        id="edition"
+                        className="group__control"
+                        placeholder="Enter Edition"
+                        onChange={(e) => setEdition(e.target.value)}
+                        value={edition}
+                      />
+                    </div>
+                    <div className="group">
                       <label htmlFor="category">Category</label>
                       <select
                         className="group__control"
@@ -187,9 +227,7 @@ export default function EditProduct() {
                       </select>
                     </div>
                     <div className="group">
-                      <label htmlFor="description">
-                        Description
-                      </label>
+                      <label htmlFor="description">Description</label>
                       <textarea
                         type="text"
                         id="description"

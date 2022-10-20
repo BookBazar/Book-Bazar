@@ -21,7 +21,6 @@ export const userRegister = (info) => {
     try {
       dispatch({ type: USER_SIGNUP_REQUEST });
       const { data } = await axios.post("/api/user/register", info, config);
-      localStorage.setItem("USER_TOKEN", data.token);
       dispatch({ type: USER_SIGNUP_SUCCESS, payload: data.token });
     } catch (error) {
       console.log(error);

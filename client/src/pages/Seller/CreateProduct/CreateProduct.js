@@ -18,6 +18,8 @@ export default function CreateProduct({ history }) {
   const [quantity, setQuantity] = useState(0);
   const [description, setDescription] = useState("");
   const [condition, setCondition] = useState("new");
+  const [edition, setEdition] = useState(0.0);
+  const [isbn, setIsbn] = useState("");
   const [image, setImage] = useState("");
 
   const dispatch = useDispatch();
@@ -69,8 +71,10 @@ export default function CreateProduct({ history }) {
         image,
         category,
         condition,
-        description, 
-        quantity
+        description,
+        quantity,
+        isbn,
+        edition,
       })
     );
   };
@@ -140,6 +144,28 @@ export default function CreateProduct({ history }) {
                         placeholder="Enter Quantity"
                         onChange={(e) => setQuantity(e.target.value)}
                         value={quantity}
+                      />
+                    </div>
+                    <div className="group">
+                      <label htmlFor="isbn">ISBN Number (Optional)</label>
+                      <input
+                        type="text"
+                        id="isbn"
+                        className="group__control"
+                        placeholder="Enter ISBN"
+                        onChange={(e) => setIsbn(e.target.value)}
+                        value={isbn}
+                      />
+                    </div>
+                    <div className="group">
+                      <label htmlFor="edition">Edition</label>
+                      <input
+                        type="number"
+                        id="edition"
+                        className="group__control"
+                        placeholder="Enter Edition"
+                        onChange={(e) => setEdition(e.target.value)}
+                        value={edition}
                       />
                     </div>
                     <div className="group">

@@ -90,6 +90,14 @@ export default function ViewProducts({ match }) {
                       <strong>Category</strong> {item.category}
                     </h3>
                     <h3>
+                      <strong>Edition</strong> {item.edition}
+                    </h3>
+                    {item.isbn && (
+                      <h3>
+                        <strong>ISBN Number</strong> {item.isbn}
+                      </h3>
+                    )}
+                    <h3>
                       <strong>Condition</strong> {item.condition}
                     </h3>
                     <h3>
