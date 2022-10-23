@@ -1,7 +1,7 @@
 import React from "react";
 
 //Depedencies
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 //styles and components

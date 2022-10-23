@@ -142,12 +142,13 @@ exports.addProduct = async (req, res) => {
 
 /**
  * @description Get Store
- * @route GET /api/seller/get-store
+ * @route GET /api/seller/get-store?id
  * @access Private
  */
 exports.getStore = async (req, res) => {
   const { _id } = req.user;
   const store = await sellerModel.findOne({ user: { $eq: _id } });
+
   if (!store) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ store });
 };
@@ -373,4 +374,17 @@ module.exports.createReview = async (req, res) => {
   } else {
     res.status(404).json({ msg: "Product not found" });
   }
+};
+
+/**
+ * @description Create Review
+ * @route GET /api/seller/get-user-store
+ * @access Private
+ */
+module.exports.getUserStore = async (req, res) => {
+  const { id } = req.params;
+  const store = await sellerModel.find({ user: { $eq: id } });
+
+  if (!store) return res.status(401).json({ msg: "Something went wrong" });
+  return res.status(200).json({ store });
 };

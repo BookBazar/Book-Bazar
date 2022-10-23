@@ -55,7 +55,7 @@ export default function Shipping({ history }) {
               <div className="group">
                 <label htmlFor="postalCode">Postal Code</label>
                 <input
-                  type="text"
+                  type="number"
                   id="postalCode"
                   required
                   className="group__control"

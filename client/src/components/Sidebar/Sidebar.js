@@ -11,12 +11,18 @@ import { BsPlusLg } from "react-icons/bs";
 import { BiStore } from "react-icons/bi";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { BsFillCartFill } from "react-icons/bs";
+import { BsListNested } from "react-icons/bs";
+import { USER_LOGOUT } from "../../store/constants/authConstants";
 
 export default function Sidebar() {
   const { username, isSeller } = useSelector((state) => state.UserInfoReducer);
 
   const dispatch = useDispatch();
 
+  const logout = () => {
+    localStorage.removeItem("USER_TOKEN");
+    dispatch({ type: USER_LOGOUT });
+  };
   //Get user info
   useEffect(() => {
     dispatch(userInfo());
@@ -26,13 +32,19 @@ export default function Sidebar() {
     <div className="sidebar">
       <nav className="links">
         <ul className="sidebar_ul">
-          <Link to="/dashboard">
+          <Link to="/homepage">
             <li>
               <span className="sidebar_name">{username}</span>
             </li>
           </Link>
           {isSeller ? (
             <>
+              <NavLink to="/dashboard">
+                <li>
+                  <BsListNested className="sidebar_icon" />
+                  <span className="sidebar_title">Products List</span>
+                </li>
+              </NavLink>
               <NavLink to="/create-products">
                 <li>
                   <BsPlusLg className="sidebar_icon" />
@@ -61,6 +73,11 @@ export default function Sidebar() {
               <span className="sidebar_title">Setting</span>
             </li>
           </NavLink>
+          <li className="logout_btn">
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
+          </li>
         </ul>
       </nav>
     </div>

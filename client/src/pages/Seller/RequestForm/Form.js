@@ -65,19 +65,28 @@ export default function Form({ history }) {
   //Functions
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      createStore({
-        storeName,
-        ownerName,
-        contact,
-        email,
-        storeType,
-        address,
-        location,
-        image,
-        isCustomer,
-      })
-    );
+    if (contact.length !== 11) {
+      toast.error("Invalid Contact Number");
+    }
+    
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email.match(mailformat)) {
+      dispatch(
+        createStore({
+          storeName,
+          ownerName,
+          contact,
+          email,
+          storeType,
+          address,
+          location,
+          image,
+          isCustomer,
+        })
+      );
+    } else {
+      toast.error("Invalid Email");
+    }
   };
 
   return (
@@ -127,7 +136,7 @@ export default function Form({ history }) {
                   <div className="group">
                     <label htmlFor="contact">Contact Number</label>
                     <input
-                      type="text"
+                      type="number"
                       id="contact"
                       className="group__control"
                       placeholder="Enter Contact Number"

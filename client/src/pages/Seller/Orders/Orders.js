@@ -71,14 +71,14 @@ export default function Orders() {
                     type="submit"
                     onClick={() => setOrderType("approved")}
                   >
-                    Approved Orders
+                    Dispatched Orders
                   </button>
                   <button
                     className="tab_btn"
                     type="submit"
                     onClick={() => setOrderType("complete")}
                   >
-                    Complete Orders
+                    Delivered Orders
                   </button>
                   <button
                     className="tab_btn"

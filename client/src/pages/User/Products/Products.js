@@ -8,7 +8,10 @@ import toast, { Toaster } from "react-hot-toast";
 //Styles and components
 import "./Products.css";
 import { getProducts } from "../../../store/methods/productMethods";
-import { createReview } from "../../../store/methods/sellerMethods";
+import {
+  createReview,
+  getUserStore,
+} from "../../../store/methods/sellerMethods";
 
 import Loader from "../../../components/Loader/Loader";
 import Navbar from "../../../components/Navbar/Navbar";
@@ -17,12 +20,18 @@ export default function Products() {
   const [rating, setRating] = useState(0);
   const { products, loading } = useSelector((state) => state.ProductsReducer);
   const { success, errors } = useSelector((state) => state.CreateReviewReducer);
+  const { userStore } = useSelector((state) => state.FetchUserStoreReducer);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   //Fetch Products
   useEffect(() => {
     dispatch(getProducts(id));
+  }, [dispatch, id]);
+
+  //Fetch Store
+  useEffect(() => {
+    dispatch(getUserStore(id));
   }, [dispatch, id]);
 
   //Submit Review
@@ -64,10 +73,45 @@ export default function Products() {
           }}
         />
         <div className="products_content">
-          {/* <Route render={({ history }) => <Search history={history} redirect='dashboard' search='product-search'/>} /> */}
+          {userStore.map((store) => (
+            <div className="ml-minus-15" key={store._id}>
+              <div className="col-8 p-15">
+                <div className="store_container">
+                  <div className="item_image_container">
+                    <img
+                      src={store.image}
+                      alt={store.storeName}
+                      className="item_image"
+                      style={{
+                        width: "200px",
+                        height: "300px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                  <div className="item_content">
+                    <h2>{store.storeName}</h2>
+                    <h3>
+                      <strong>Contact Number</strong> {store.contact}
+                    </h3>
+                    <h3>
+                      <strong>Email</strong> {store.email}
+                    </h3>
+                    <h3>
+                      <strong>Address</strong> {store.address}
+                    </h3>
+                    <h3>
+                      <strong>Location</strong> {store.location}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* <Route render={({ history }) => <Search history={history} redirect='dashboard' search='product-search'/>} />  */}
           {!loading ? (
             products.map((item) => (
-              <div className=" ml-minus-15" key={item._id}>
+              <div className="ml-minus-15" key={item._id}>
                 <div className="col-8 p-15">
                   <Link to={`/product/${item._id}`}>
                     <div className="item_container">
@@ -88,6 +132,14 @@ export default function Products() {
                         <h3>
                           <strong>Author</strong> {item.authorName}
                         </h3>
+                        <h3>
+                          <strong>Condition</strong> {item.condition}
+                        </h3>
+                        {item.edition && (
+                          <h3>
+                            <strong>Edition</strong> {item.edition}
+                          </h3>
+                        )}
                         <h3>
                           <strong>PKR</strong> {item.price}
                         </h3>

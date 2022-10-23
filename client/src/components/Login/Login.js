@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 //Styles and Components
 import { userLogin } from "../../store/methods/authMethods";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     setEmail(email);
     setPassword(password);
 
@@ -84,7 +85,14 @@ export default function Login() {
               />
             </div>
           </div>
-          WebLoginbtn
+          <div className="weblogintop">
+            <h3 style={{ fontSize: "1.5rem" }}>
+              Don't Have an Account?{" "}
+              <Link to="/signup" style={{ color: "#e1b107" }}>
+                Signup
+              </Link>
+            </h3>
+          </div>
           <div className="btnalign">
             {!loading && (
               <button className="WebLoginbtn" type="submit">

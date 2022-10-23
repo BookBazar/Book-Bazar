@@ -31,6 +31,9 @@ import {
   CREATE_REVIEW_REQUEST,
   CREATE_REVIEW_SUCCESS,
   CREATE_REVIEW_FAIL,
+  FETCH_USER_STORE_REQUEST,
+  FETCH_USER_STORE_SUCCESS,
+  FETCH_USER_STORE_FAIL,
 } from "../constants/sellerConstants";
 
 export const createStore = (info) => {
@@ -107,6 +110,33 @@ export const getStore = () => {
       console.log(error);
       dispatch({
         type: FETCH_STORE_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const getUserStore = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      dispatch({ type: FETCH_USER_STORE_REQUEST });
+      const { data } = await axios.get(
+        `/api/seller/get-user-store/${id}`,
+        config
+      );
+      dispatch({ type: FETCH_USER_STORE_SUCCESS, payload: data.store });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_USER_STORE_FAIL,
         payload: error.response.data.errors,
       });
     }

@@ -6,6 +6,8 @@ import {
   SignupReducer,
   LoginReducer,
   UserInfoReducer,
+  UpdateUserProfileReducer,
+  UpdateUserPasswordReducer
 } from "./reducers/authReducers";
 
 import {
@@ -18,7 +20,8 @@ import {
   EditProductReducer,
   DeleteProductReducer,
   FetchStoresReducer,
-  CreateReviewReducer
+  CreateReviewReducer,
+  FetchUserStoreReducer,
 } from "./reducers/sellerReducers";
 
 import {
@@ -50,10 +53,13 @@ const rootReducers = combineReducers({
   SignupReducer,
   LoginReducer,
   UserInfoReducer,
+  UpdateUserProfileReducer,
+  UpdateUserPasswordReducer,
 
   CreateStoreReducer,
   CreateProductReducer,
   FetchStoreReducer,
+  FetchUserStoreReducer,
   UpdateStoreReducer,
   FetchProductsReducer,
   FetchProductReducer,
@@ -61,7 +67,7 @@ const rootReducers = combineReducers({
   DeleteProductReducer,
   FetchStoresReducer,
   CreateReviewReducer,
-  
+
   AdminLoginReducer,
   StoreRequestReducer,
   SpecificStoreReducer,

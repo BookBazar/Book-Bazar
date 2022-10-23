@@ -15,6 +15,7 @@ const {
   deleteProduct,
   getStores,
   createReview,
+  getUserStore,
 } = require("../controllers/seller");
 
 router.route("/create-store").post(verifyUser, shopValidations, createShop);
@@ -22,6 +23,7 @@ router
   .route("/create-product")
   .post(verifyUser, productValidations, addProduct);
 router.route("/get-store").get(verifyUser, getStore);
+router.route("/get-user-store/:id").get(verifyUser, getUserStore);
 router.route("/update-store").put(verifyUser, updateValidations, updateStore);
 router
   .route("/edit-product/:id")

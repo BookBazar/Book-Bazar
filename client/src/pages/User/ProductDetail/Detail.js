@@ -40,7 +40,12 @@ export default function Detail({ history }) {
           <div className="product_details">
             <h3>{product.bookName}</h3>
             <p className="product_price">Price: PKR {product.price}</p>
+            <p className="product_description">Author: {product.authorName}</p>
             <p className="product_description">Edition: {product.edition}</p>
+            <p className="product_description">Category: {product.category}</p>
+            <p className="product_description">
+              Condition: {product.condition}
+            </p>
             {product.isbn && (
               <p className="product_description">ISBN: {product.isbn}</p>
             )}
@@ -85,7 +90,7 @@ export default function Detail({ history }) {
               type="button"
               disabled={product.quantity === 0}
             >
-              {product.quantity > 0 ? "Add to Cart" : "Out of Stock"}
+              {product.quantity > 0 ? "Buy Now" : "Out of Stock"}
             </button>
           </div>
         </div>

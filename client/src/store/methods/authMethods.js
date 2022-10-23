@@ -9,6 +9,12 @@ import {
   GET_USER_INFO_FAIL,
   GET_USER_INFO_SUCCESS,
   GET_USER_INFO_REQUEST,
+  UPDATE_USER_PROFILE_REQUEST,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_FAIL,
+  UPDATE_USER_PASSWORD_REQUEST,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_FAIL,
 } from "../constants/authConstants";
 
 export const userRegister = (info) => {
@@ -64,7 +70,58 @@ export const userInfo = () => {
       dispatch({ type: GET_USER_INFO_SUCCESS, payload: data });
     } catch (error) {
       console.log(error);
-      dispatch({ type: GET_USER_INFO_FAIL, payload: error.response.data.errors });
+      dispatch({
+        type: GET_USER_INFO_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const updateUserProfile = (info) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
+      await axios.put("/api/user/update-profile", info, config);
+      dispatch({ type: UPDATE_USER_PROFILE_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: UPDATE_USER_PROFILE_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const updateUserPassword = (info) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      dispatch({ type: UPDATE_USER_PASSWORD_REQUEST });
+      await axios.put("/api/user/update-password", info, config);
+      dispatch({ type: UPDATE_USER_PASSWORD_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: UPDATE_USER_PASSWORD_FAIL,
+        payload: error.response.data.errors,
+      });
     }
   };
 };

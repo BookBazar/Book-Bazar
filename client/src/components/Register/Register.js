@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 //Styles and components
 import { userRegister } from "../../store/methods/authMethods";
+import { Link } from "react-router-dom";
 
 export default function Register({ history }) {
   //States
@@ -122,7 +123,14 @@ export default function Register({ history }) {
               />
             </div>
           </div>
-
+          <div className="weblogintop">
+            <h3 style={{ fontSize: "1.5rem" }}>
+              Already Have an Account?{" "}
+              <Link to="/login" style={{ color: "#e1b107" }}>
+                Login
+              </Link>
+            </h3>
+          </div>
           <div className="btnalign">
             {!loading && (
               <button className="WebLoginbtn" type="submit">

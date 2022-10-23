@@ -4,6 +4,12 @@ import {
   GET_USER_INFO_FAIL,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
+  UPDATE_USER_PASSWORD_FAIL,
+  UPDATE_USER_PASSWORD_REQUEST,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PROFILE_FAIL,
+  UPDATE_USER_PROFILE_REQUEST,
+  UPDATE_USER_PROFILE_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -18,6 +24,7 @@ const initialState = {
   token: "",
   success: false,
   user: "",
+  email: "",
   errors: [],
   username: "",
   isSeller: false,
@@ -105,8 +112,43 @@ export const UserInfoReducer = (state = initialState, action) => {
       success: true,
       isSeller: payload.isSeller,
       username: payload.username,
+      email: payload.email,
     };
   } else if (type === GET_USER_INFO_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const UpdateUserProfileReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === UPDATE_USER_PROFILE_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === UPDATE_USER_PROFILE_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+    };
+  } else if (type === UPDATE_USER_PROFILE_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const UpdateUserPasswordReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === UPDATE_USER_PASSWORD_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === UPDATE_USER_PASSWORD_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+    };
+  } else if (type === UPDATE_USER_PASSWORD_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

@@ -31,9 +31,7 @@ exports.userRegister = async (req, res) => {
   try {
     const userExists = await userModel.findOne({ email });
     if (userExists) {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: "Admin already exists" }] });
+      return res.status(400).json({ errors: [{ msg: "User already exists" }] });
     } else {
       try {
         const user = await userModel.create({
@@ -93,6 +91,79 @@ exports.userLogin = async (req, res) => {
  * @access Public
  */
 module.exports.getUserInfo = async (req, res) => {
-  const { username, isSeller } = req.user;
-  return res.status(200).json({ username, isSeller });
+  const { username, email, isSeller } = req.user;
+  return res.status(200).json({ username, isSeller, email });
+};
+
+/**
+ * @description Update Profile
+ * @route PUT /api/user/update-profile
+ * @access Private
+ */
+module.exports.updateProfile = async (req, res) => {
+  const { _id } = req.user;
+  const { name, email } = req.body;
+  if (name === "") {
+    return res.status(400).json({ errors: [{ msg: "Name is required" }] });
+  }
+  if (email === "") {
+    return res.status(400).json({ errors: [{ msg: "Email is required" }] });
+  }
+  try {
+    await userModel.updateOne({ _id }, { username: name, email });
+    return res.status(200).json({ msg: "Profile updated succesfully" });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+/**
+ * @description Update Passoword
+ * @route PUT /api/user/update-password
+ * @access Private
+ */
+module.exports.updatePasswordValidations = [
+  body("currentPassword")
+    .not()
+    .isEmpty()
+    .trim()
+    .withMessage("Current password is required"),
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("New Password must be 6 characters long"),
+];
+
+module.exports.updatePassword = async (req, res) => {
+  const { _id } = req.user;
+  const { currentPassword, password } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  } else {
+    const user = await userModel.findOne({ _id });
+    if (user) {
+      const matched = await bcrypt.compare(currentPassword, user.password);
+      if (!matched) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Current password is wrong" }] });
+      } else {
+        try {
+          const salt = await bcrypt.genSalt(10);
+          const hash = await bcrypt.hash(password, salt);
+         await userModel.updateOne(
+            { _id },
+            { password: hash },
+            { new: true }
+          );
+          return res.status(200).json({ msg: "Password updated succesfully" });
+        } catch (error) {
+          return res.status(500).json({ errors });
+        }
+      }
+    } else {
+      return res.status(400).json({ errors: [{ msg: "User not found" }] });
+    }
+  }
 };
