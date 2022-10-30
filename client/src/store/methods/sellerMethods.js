@@ -315,7 +315,7 @@ export const createReview = (info) => {
       console.log(error);
       dispatch({
         type: CREATE_REVIEW_FAIL,
-        payload: error.response.data.errors,
+        payload: [error.response.data],
       });
     }
   };

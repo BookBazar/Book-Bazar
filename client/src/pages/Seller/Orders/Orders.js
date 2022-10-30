@@ -164,12 +164,7 @@ export default function Orders() {
                           >
                             View
                           </Link>
-                          <button
-                            className="btn btn-light orderscardbtn"
-                            onClick={() => handleCancel({ id: item._id })}
-                          >
-                            Cancel
-                          </button>
+                         
                         </div>
                       )}
                     </div>

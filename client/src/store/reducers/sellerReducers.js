@@ -37,12 +37,13 @@ import {
 const initialState = {
   loading: false,
   success: false,
+  isReviewed: false,
   errors: [],
   store: [],
   stores: [],
   specificStore: {},
   specificProduct: {},
-  userStore: [],
+  userStore: {},
   product: [],
   products: [],
 };
@@ -243,6 +244,7 @@ export const CreateReviewReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       success: true,
+      isReviewed: true,
       errors: [],
     };
   } else if (type === CREATE_REVIEW_FAIL) {

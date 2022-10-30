@@ -89,6 +89,7 @@ module.exports.getOrders = async (req, res) => {
  */
 module.exports.getOrder = async (req, res) => {
   const { id } = req.params;
+
   const order = await orderModel.find({ _id: { $eq: id } });
   if (!order) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ order });
@@ -149,4 +150,33 @@ module.exports.completeOrder = async (req, res) => {
     }
   );
   res.status(200).json({ success: true });
+};
+
+/**
+ * @description Get user orders
+ * @route GET /api/order/get-user-orders
+ * @access Private
+ */
+module.exports.getUserOrders = async (req, res) => {
+  const { _id } = req.user;
+  const myOrders = await orderModel.find({ user: { $eq: _id } });
+  if (!myOrders) return res.status(401).json({ msg: "Something went wrong" });
+  return res.status(200).json({ myOrders });
+};
+
+/**
+ * @description Get user orders for specific stores
+ * @route GET /api/order/get-specific-store-orders
+ * @access Private
+ */
+module.exports.getSpecificStoreOrders = async (req, res) => {
+  const { _id } = req.user;
+  const { id } = req.params;
+
+  const myOrders = await orderModel.find({
+    "orderItems.storeOwner": { $eq: id },
+    user: { $eq: _id },
+  });
+  if (!myOrders) return res.status(401).json({ msg: "Something went wrong" });
+  return res.status(200).json({ myOrders });
 };

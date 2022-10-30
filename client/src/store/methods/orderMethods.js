@@ -15,6 +15,12 @@ import {
   FETCH_ORDER_FAIL,
   FETCH_ORDER_REQUEST,
   FETCH_ORDER_SUCCESS,
+  FETCH_SPECIFIC_STORE_ORDERS_FAIL,
+  FETCH_SPECIFIC_STORE_ORDERS_REQUEST,
+  FETCH_SPECIFIC_STORE_ORDERS_SUCCESS,
+  FETCH_USER_ORDERS_FAIL,
+  FETCH_USER_ORDERS_REQUEST,
+  FETCH_USER_ORDERS_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -85,7 +91,10 @@ export const getOrder = (id) => {
     };
     dispatch({ type: FETCH_ORDER_REQUEST });
     try {
-      const { data } = await axios.get(`/api/order/get-order/${id}`, config);
+      const { data } = await axios.get(
+        `/api/order/get-order/${id}`,
+        config
+      );
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: data.order });
     } catch (error) {
       console.log(error);
@@ -163,6 +172,54 @@ export const completeOrder = (id) => {
       console.log(error);
       dispatch({
         type: COMPLETE_ORDER_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const getUserOrders = () => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: FETCH_USER_ORDERS_REQUEST });
+    try {
+      const { data } = await axios.get("/api/order/get-user-orders", config);
+      dispatch({ type: FETCH_USER_ORDERS_SUCCESS, payload: data.myOrders });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_USER_ORDERS_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const getSpecificStoreOrders = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: FETCH_SPECIFIC_STORE_ORDERS_REQUEST });
+    try {
+      const { data } = await axios.get(`/api/order/get-specific-store-orders/${id}`, config);
+      dispatch({ type: FETCH_SPECIFIC_STORE_ORDERS_SUCCESS, payload: data.myOrders });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_SPECIFIC_STORE_ORDERS_FAIL,
         payload: error.response.data.errors,
       });
     }

@@ -100,6 +100,12 @@ export default function ViewProducts({ match }) {
                     <h3>
                       <strong>Condition</strong> {item.condition}
                     </h3>
+                    {item.tags.length !== 0 && (
+                      <h3>
+                        <strong>Tags</strong>{" "}
+                        {item.tags.map((tag) => `#${tag} `)}
+                      </h3>
+                    )}
                     <h3>
                       <strong>Quantity</strong> {item.quantity}
                     </h3>

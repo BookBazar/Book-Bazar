@@ -14,6 +14,12 @@ import {
   FETCH_ORDER_FAIL,
   FETCH_ORDER_REQUEST,
   FETCH_ORDER_SUCCESS,
+  FETCH_SPECIFIC_STORE_ORDERS_FAIL,
+  FETCH_SPECIFIC_STORE_ORDERS_REQUEST,
+  FETCH_SPECIFIC_STORE_ORDERS_SUCCESS,
+  FETCH_USER_ORDERS_FAIL,
+  FETCH_USER_ORDERS_REQUEST,
+  FETCH_USER_ORDERS_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_RESET,
@@ -25,6 +31,8 @@ const initialState = {
   success: false,
   order: [],
   orders: [],
+  specificStoreOrders: [],
+  userOrders: [],
   errors: [],
 };
 
@@ -141,6 +149,47 @@ export const CompleteOrderReducer = (state = initialState, action) => {
       errors: [],
     };
   } else if (COMPLETE_ORDER_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const FetchUserOrdersReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === FETCH_USER_ORDERS_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_USER_ORDERS_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      userOrders: payload,
+      errors: [],
+    };
+  } else if (FETCH_USER_ORDERS_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const FetchSpecificStoreOrdersReducer = (
+  state = initialState,
+  action
+) => {
+  const { type, payload } = action;
+  if (type === FETCH_SPECIFIC_STORE_ORDERS_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_SPECIFIC_STORE_ORDERS_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      specificStoreOrders: payload,
+      errors: [],
+    };
+  } else if (FETCH_SPECIFIC_STORE_ORDERS_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

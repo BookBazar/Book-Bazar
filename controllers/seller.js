@@ -109,6 +109,7 @@ exports.addProduct = async (req, res) => {
     quantity,
     edition,
     isbn,
+    tags,
   } = req.body;
   const { _id } = req.user;
 
@@ -130,6 +131,7 @@ exports.addProduct = async (req, res) => {
         quantity,
         edition,
         isbn,
+        tags,
       });
       return res
         .status(200)
@@ -353,7 +355,7 @@ module.exports.createReview = async (req, res) => {
     );
 
     if (alreadyReviewed) {
-      res.status(400).json({ msg: "Product already reviewed" });
+      return res.status(400).json({ msg: "Product already reviewed" });
     }
 
     const review = {
@@ -370,9 +372,9 @@ module.exports.createReview = async (req, res) => {
       seller.review.length;
 
     await seller.save();
-    res.status(201).json({ mesg: "Review added" });
+    return res.status(201).json({ errors: [{ msg: "Review added" }] });
   } else {
-    res.status(404).json({ msg: "Product not found" });
+    return res.status(404).json({ msg: "Product not found" });
   }
 };
 
@@ -383,7 +385,7 @@ module.exports.createReview = async (req, res) => {
  */
 module.exports.getUserStore = async (req, res) => {
   const { id } = req.params;
-  const store = await sellerModel.find({ user: { $eq: id } });
+  const store = await sellerModel.findOne({ user: { $eq: id } });
 
   if (!store) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ store });

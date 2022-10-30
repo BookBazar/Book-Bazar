@@ -18,6 +18,11 @@ const orderSchema = new mongoose.Schema(
           required: true,
           ref: "product",
         },
+        storeOwner: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "product",
+        },
       },
     ],
     shippingAddress: {

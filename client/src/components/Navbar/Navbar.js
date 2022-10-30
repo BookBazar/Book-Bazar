@@ -25,7 +25,6 @@ export default function Navbar() {
     dispatch({ type: USER_LOGOUT });
   };
 
-
   return (
     <nav className="navbar">
       <Link to="/homepage" style={{ color: "black" }}>
@@ -39,6 +38,11 @@ export default function Navbar() {
 
         <div className="menu">
           <li>
+            <Link to="/my-orders">
+              <div className="links">My Orders</div>
+            </Link>
+          </li>
+          <li>
             <span style={{ marginRight: "0.5rem" }}>
               <BsFillCartFill />
             </span>
@@ -51,13 +55,15 @@ export default function Navbar() {
           )}
           {user && (
             <li>
-              <Link to="/dashboard">
+              <Link to="/setting">
                 <div className="links">{username}</div>
               </Link>
             </li>
           )}
           <li>
-            <button className="btn" onClick={logout}>Logout</button>
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
           </li>
         </div>
       </ul>

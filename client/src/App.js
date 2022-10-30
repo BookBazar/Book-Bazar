@@ -36,6 +36,7 @@ import Shipping from "./pages/User/Shipping/Shipping";
 import Payment from "./pages/User/Payment/Payment";
 import Summary from "./pages/User/Place Order/Summary";
 import Setting from "./pages/User/Setting/Setting";
+import MyOrders from "./pages/User/MyOrders/MyOrders";
 
 export default function App() {
   return (  
@@ -71,6 +72,7 @@ export default function App() {
           <PrivateRoute path='/orders-dashboard' exact component={Orders} />
           <PrivateRoute path='/order-detail/:id' exact component={OrderDetail} />
           <PrivateRoute path='/setting' exact component={Setting} />
+          <PrivateRoute path='/my-orders' exact component={MyOrders} />
         </Switch>
       </BrowserRouter>
     </Provider>

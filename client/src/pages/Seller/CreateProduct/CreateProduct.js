@@ -21,6 +21,7 @@ export default function CreateProduct({ history }) {
   const [edition, setEdition] = useState(0.0);
   const [isbn, setIsbn] = useState("");
   const [image, setImage] = useState("");
+  const [tags, setTags] = useState("");
 
   const dispatch = useDispatch();
   const { loading, success, errors } = useSelector(
@@ -75,6 +76,7 @@ export default function CreateProduct({ history }) {
         quantity,
         isbn,
         edition,
+        tags,
       })
     );
   };
@@ -140,6 +142,7 @@ export default function CreateProduct({ history }) {
                       <input
                         type="number"
                         id="quantity"
+                        min={0}
                         className="group__control"
                         placeholder="Enter Quantity"
                         onChange={(e) => setQuantity(e.target.value)}
@@ -192,6 +195,17 @@ export default function CreateProduct({ history }) {
                         <option value="Argumentatives">Argumentatives</option>
                         <option value="Others">Others</option>
                       </select>
+                    </div>
+                    <div className="group">
+                      <label htmlFor="tags">Tags (Comma Seperated)</label>
+                      <input
+                        type="text"
+                        id="tags"
+                        className="group__control"
+                        placeholder="Enter Tags"
+                        onChange={(e) => setTags(e.target.value.split(","))}
+                        value={tags}
+                      />
                     </div>
                     <div className="group">
                       <label htmlFor="category">Condition</label>

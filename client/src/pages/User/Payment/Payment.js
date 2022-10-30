@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 //styles and components
 import "./Payment.css";
 import { savePaymentMethod } from "../../../store/methods/productMethods";
+import Navbar from "../../../components/Navbar/Navbar";
 
 export default function Payment({ history }) {
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -20,37 +21,42 @@ export default function Payment({ history }) {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    history.push('/placeorder')
+    history.push("/placeorder");
   };
-  
+
   return (
-    <div className="shipping_container">
-      <form onSubmit={submitHandler}>
-        <div className="ml-minus-15 mr-minus-15">
-          <div className="col-8 p-15">
-            <div className="create_card">
-              <h3 className="card_h3">Payment Method</h3>
-              <h4 className="card_h4">Select Method</h4>
-              <div className="payment_input_container">
-                <input
-                  type="radio"
-                  checked
-                  id="COD"
-                  name="paymentMethod"
-                  value="COD"
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-                <label htmlFor="COD">Cash on Delivery</label>
-              </div>
-              <div className="group">
-                <button className="btn btn_status" type="submit">
-                  Continue
-                </button>
+    <>
+      <div>
+        <Navbar />
+      </div>
+      <div className="shipping_container">
+        <form onSubmit={submitHandler}>
+          <div className="ml-minus-15 mr-minus-15">
+            <div className="col-8 p-15">
+              <div className="create_card">
+                <h3 className="card_h3">Payment Method</h3>
+                <h4 className="card_h4">Select Method</h4>
+                <div className="payment_input_container">
+                  <input
+                    type="radio"
+                    checked
+                    id="COD"
+                    name="paymentMethod"
+                    value="COD"
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  <label htmlFor="COD">Cash on Delivery</label>
+                </div>
+                <div className="group">
+                  <button className="btn btn_status" type="submit">
+                    Continue
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 }

@@ -70,6 +70,7 @@ export const addToCart = (id, qty) => {
       dispatch({
         type: CART_ADD_ITEM,
         payload: {
+          storeOwner: product.user,
           productId: product._id,
           bookName: product.bookName,
           image: product.image,

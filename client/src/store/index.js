@@ -7,7 +7,7 @@ import {
   LoginReducer,
   UserInfoReducer,
   UpdateUserProfileReducer,
-  UpdateUserPasswordReducer
+  UpdateUserPasswordReducer,
 } from "./reducers/authReducers";
 
 import {
@@ -47,6 +47,8 @@ import {
   ApproveOrderReducer,
   CancelOrderReducer,
   CompleteOrderReducer,
+  FetchUserOrdersReducer,
+  FetchSpecificStoreOrdersReducer,
 } from "./reducers/orderReducer";
 
 const rootReducers = combineReducers({
@@ -86,6 +88,8 @@ const rootReducers = combineReducers({
   ApproveOrderReducer,
   CancelOrderReducer,
   CompleteOrderReducer,
+  FetchUserOrdersReducer,
+  FetchSpecificStoreOrdersReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

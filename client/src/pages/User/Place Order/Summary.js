@@ -10,6 +10,7 @@ import "./Summary.css";
 import { createOrder } from "../../../store/methods/orderMethods";
 import { ORDER_CREATE_RESET } from "../../../store/constants/orderConstants";
 import Loader from "../../../components/Loader/Loader";
+import Navbar from "../../../components/Navbar/Navbar";
 
 export default function Summary({ history }) {
   const dispatch = useDispatch();
@@ -62,6 +63,9 @@ export default function Summary({ history }) {
 
   return (
     <>
+      <div>
+        <Navbar />
+      </div>
       {!loading ? (
         <div className="summary_container">
           <Toaster
