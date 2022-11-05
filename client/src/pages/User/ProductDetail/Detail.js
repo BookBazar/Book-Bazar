@@ -22,7 +22,7 @@ export default function Detail({ history }) {
   }, [dispatch, id]);
 
   //Functions
-  const addToCartHandler = () => {
+  const buyNowHandler = () => {
     history.push(`/cart/${id}?qty=${qty}`);
   };
 
@@ -95,18 +95,20 @@ export default function Detail({ history }) {
                   </select>
                 </div>
               )}
-              <button
-                onClick={addToCartHandler}
-                className={
-                  product.quantity === 0
-                    ? "btn_status btn_disabled"
-                    : "btn btn_status"
-                }
-                type="button"
-                disabled={product.quantity === 0}
-              >
-                {product.quantity > 0 ? "Buy Now" : "Out of Stock"}
-              </button>
+              <div>
+                <button
+                  onClick={buyNowHandler}
+                  className={
+                    product.quantity === 0
+                      ? "btn_status btn_disabled"
+                      : "btn btn_status"
+                  }
+                  type="button"
+                  disabled={product.quantity === 0}
+                >
+                  {product.quantity > 0 ? "Buy Now" : "Out of Stock"}
+                </button>
+              </div>
             </div>
           </div>
         )}

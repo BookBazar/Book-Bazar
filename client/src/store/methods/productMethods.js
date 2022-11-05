@@ -13,7 +13,7 @@ import {
   CART_SAVE_PAYMENT_METHOD,
 } from "../constants/productConstants";
 
-export const getProducts = (id) => {
+export const getProducts = (id, keyword) => {
   return async (dispatch) => {
     const config = {
       headers: {
@@ -23,9 +23,10 @@ export const getProducts = (id) => {
     try {
       dispatch({ type: FETCH_PRODUCTS_REQUEST });
       const { data } = await axios.get(
-        `/api/product/get-products/${id}`,
+        `/api/product/get-products/${id}?keyword=${keyword}`,
         config
       );
+      console.log(keyword);
       dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: data.products });
     } catch (error) {
       console.log(error);

@@ -110,7 +110,7 @@ export default function Summary({ history }) {
                         </Link>
                       </div>
                       <div className="summary_item_price">
-                        {item.qty} x {item.price} = ${item.qty * item.price}
+                        {item.qty} x {item.price} = PKR{item.qty * item.price}
                       </div>
                     </div>
                   ))}

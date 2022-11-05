@@ -18,11 +18,11 @@ import Loader from "../../../components/Loader/Loader";
 import Navbar from "../../../components/Navbar/Navbar";
 
 export default function Products() {
+  const [keyword, setKeyword] = useState("");
   const [rating, setRating] = useState(0);
+
   const { products, loading } = useSelector((state) => state.ProductsReducer);
-  const { success, errors, isReviewed } = useSelector(
-    (state) => state.CreateReviewReducer
-  );
+  const { success, errors } = useSelector((state) => state.CreateReviewReducer);
   const { userStore } = useSelector((state) => state.FetchUserStoreReducer);
   const { specificStoreOrders } = useSelector(
     (state) => state.FetchSpecificStoreOrdersReducer
@@ -30,12 +30,15 @@ export default function Products() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  console.log(isReviewed);
+  //Check if already reviewed
+  // useEffect(() => {
+  //   dispatch(isStoreReviewed(userStore._id));
+  // }, [dispatch, userStore]);
 
   //Fetch Products
   useEffect(() => {
-    dispatch(getProducts(id));
-  }, [dispatch, id]);
+    dispatch(getProducts(id, keyword));
+  }, [dispatch, id, keyword]);
 
   //Fetch Store
   useEffect(() => {
@@ -86,7 +89,37 @@ export default function Products() {
             },
           }}
         />
+
         <div className="products_content">
+          {/* Search */}
+          <div className="content_panel">
+            <div className="form_container">
+              <div className="row ml-minus-15 mr-minus-15">
+                <div className="col-6 p-15">
+                  <div className="create_card">
+                    <div className="group">
+                      <input
+                        type="text"
+                        naem="q"
+                        className="group__control"
+                        placeholder="Search"
+                        onChange={(e) => setKeyword(e.target.value)}
+                      />
+                      <button
+                        type="submit"
+                        className="btn"
+                        style={{ marginLeft: "1rem" }}
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="ml-minus-15" key={userStore._id}>
             <div className="col-8 p-15">
               <div className="store_container">
@@ -121,7 +154,6 @@ export default function Products() {
             </div>
           </div>
 
-          {/* <Route render={({ history }) => <Search history={history} redirect='dashboard' search='product-search'/>} />  */}
           {!loading ? (
             products.map((item) => (
               <div className="ml-minus-15" key={item._id}>

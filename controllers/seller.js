@@ -321,15 +321,23 @@ exports.deleteProduct = async (req, res) => {
 exports.getStores = async (req, res) => {
   const keyword = req.query.keyword
     ? {
-        storeName: {
+        bookName: {
           $regex: req.query.keyword,
           $options: "i",
         },
       }
     : {};
   try {
+    const booksExist = await productSchema.find({ ...keyword });
+    let userIds = [];
+    if (booksExist.length !== 0) {
+      booksExist.forEach((e) => {
+        userIds.push(e.user);
+      });
+    }
+
     const stores = await sellerModel
-      .find({ ...keyword, isApproved: true, isBlocked: false })
+      .find({ user: { $in: userIds }, isApproved: true, isBlocked: false })
       .sort({ updatedAt: -1 });
     return res.status(200).json({ stores });
   } catch (error) {
@@ -389,4 +397,27 @@ module.exports.getUserStore = async (req, res) => {
 
   if (!store) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ store });
+};
+
+/**
+ * @description Is Store Already Reviewed
+ * @route GET /api/seller/get-store-review
+ * @access Private
+ */
+module.exports.isAlreadyReviewed = async (req, res) => {
+  const { id } = req.params;
+  const { _id } = req.user;
+
+  const store = await sellerModel.findOne({ _id: { $eq: id } });
+  if (store !== undefined) {
+    const reviews = store.review;
+
+    const isReviewed = reviews.find((e) => {
+      if (e.user.toString() === _id.toString()) return true;
+      else return false;
+    });
+
+    const reviewed = [isReviewed];
+    return res.status(200).json(reviewed);
+  }
 };

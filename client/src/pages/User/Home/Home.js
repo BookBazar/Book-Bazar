@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 //Dependencies
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //styles and components
 import "./Home.css";
@@ -13,10 +13,10 @@ import Rating from "../../../components/Rating/Rating";
 import Search from "../../../components/Search/Search";
 
 export default function Home({ match }) {
+  const [keyword, setKeyword] = useState("");
+
   const { loading, stores } = useSelector((state) => state.FetchStoresReducer);
   const dispatch = useDispatch();
-
-  const keyword = match.params.keyword;
 
   //Stores data
   useEffect(() => {
@@ -32,15 +32,34 @@ export default function Home({ match }) {
         <div
           style={{ display: "flex", width: "100%", justifyContent: "center" }}
         >
-          <Route
-            render={({ history }) => (
-              <Search
-                history={history}
-                redirect="homepage"
-                search="store-search"
-              />
-            )}
-          />
+          {/* Search */}
+          <div className="content_panel">
+            <div className="form_container">
+              <div className="row ml-minus-15 mr-minus-15">
+                <div className="col-6 p-15">
+                  <div className="create_card">
+                    <div className="group">
+                      <input
+                        type="text"
+                        naem="q"
+                        className="group__control"
+                        placeholder="Search"
+                        onChange={(e) => setKeyword(e.target.value)}
+                      />
+                      <button
+                        type="submit"
+                        className="btn"
+                        style={{ marginLeft: "1rem" }}
+                      >
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {loading ? (

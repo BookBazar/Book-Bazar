@@ -34,6 +34,9 @@ import {
   FETCH_USER_STORE_REQUEST,
   FETCH_USER_STORE_SUCCESS,
   FETCH_USER_STORE_FAIL,
+  STORE_REVIEWED_REQUEST,
+  STORE_REVIEWED_SUCCESS,
+  STORE_REVIEWED_FAIL,
 } from "../constants/sellerConstants";
 
 export const createStore = (info) => {
@@ -315,6 +318,42 @@ export const createReview = (info) => {
       console.log(error);
       dispatch({
         type: CREATE_REVIEW_FAIL,
+        payload: [error.response.data],
+      });
+    }
+  };
+};
+
+export const isStoreReviewed = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      dispatch({
+        type: STORE_REVIEWED_REQUEST,
+      });
+
+      const { data } = await axios.get(
+        `/api/seller/get-store-review/${id}`,
+        config
+      );
+      console.log(data.reviewed);
+
+      dispatch({
+        type: STORE_REVIEWED_SUCCESS,
+        payload: data.reviewed,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: STORE_REVIEWED_FAIL,
         payload: [error.response.data],
       });
     }

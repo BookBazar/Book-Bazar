@@ -112,7 +112,7 @@ export default function Form({ history }) {
                 <div className="create_card">
                   <h3 className="card_h3">Create a Store</h3>
                   <div className="group">
-                    <label htmlFor="storeName">Store Name</label>
+                    <label htmlFor="storeName">Store Name*</label>
                     <input
                       type="text"
                       id="storeName"
@@ -123,7 +123,7 @@ export default function Form({ history }) {
                     />
                   </div>
                   <div className="group">
-                    <label htmlFor="name">Owner Name</label>
+                    <label htmlFor="name">Owner Name*</label>
                     <input
                       type="text"
                       id="name"
@@ -134,7 +134,7 @@ export default function Form({ history }) {
                     />
                   </div>
                   <div className="group">
-                    <label htmlFor="contact">Contact Number</label>
+                    <label htmlFor="contact">Contact Number*</label>
                     <input
                       type="number"
                       id="contact"
@@ -145,7 +145,7 @@ export default function Form({ history }) {
                     />
                   </div>
                   <div className="group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email*</label>
                     <input
                       type="email"
                       id="email"
@@ -156,7 +156,7 @@ export default function Form({ history }) {
                     />
                   </div>
                   <div className="group">
-                    <label htmlFor="email">Store Type</label>
+                    <label htmlFor="email">Store Type*</label>
                     <select
                       className="group__control"
                       value={storeType}
@@ -167,7 +167,7 @@ export default function Form({ history }) {
                     </select>
                   </div>
                   <div className="group">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">Address*</label>
                     <input
                       type="text"
                       id="address"

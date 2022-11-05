@@ -32,6 +32,9 @@ import {
   FETCH_USER_STORE_REQUEST,
   FETCH_USER_STORE_SUCCESS,
   FETCH_USER_STORE_FAIL,
+  STORE_REVIEWED_REQUEST,
+  STORE_REVIEWED_SUCCESS,
+  STORE_REVIEWED_FAIL,
 } from "../constants/sellerConstants";
 
 const initialState = {
@@ -244,10 +247,28 @@ export const CreateReviewReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       success: true,
-      isReviewed: true,
       errors: [],
     };
   } else if (type === CREATE_REVIEW_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const StoreReviewReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === STORE_REVIEWED_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === STORE_REVIEWED_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      isReviewed: payload,
+      errors: [],
+    };
+  } else if (type === STORE_REVIEWED_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

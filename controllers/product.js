@@ -10,9 +10,19 @@ const {
  */
 module.exports.getProducts = async (req, res) => {
   const { id } = req.params;
+  const keyword = req.query.keyword
+    ? {
+        bookName: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
   try {
     const products = await productModel.find({
       user: { $eq: ObjectId(id) },
+      ...keyword,
     });
     if (!products)
       return res

@@ -52,7 +52,6 @@ export default function App() {
           <AdminPrivate path='/list-details/:id' exact component={ListDetails} />
 
           <Route path='/products/:id' exact component={Products}/>
-          <PrivateRoute path="/store-products-search/:keyword" component={Products} />
           <Route path='/product/:id' exact component={Detail} />
           <Route path='/cart/:id?' exact component={Cart} /> 
           <PrivateRoute path="/shipping" exact component={Shipping} />
@@ -62,7 +61,6 @@ export default function App() {
           <RouteLink path="/login" exact component={Login} />
           <RouteLink path="/signup" exact component={Register} />
           <PrivateRoute path="/homepage" exact component={Home} />
-          <PrivateRoute path="/store-search/:keyword" component={Home} />
           <PrivateRoute path="/seller-form" exact component={SellerRequest} />
           <PrivateRoute path='/dashboard' exact component={ViewProducts} />
           <PrivateRoute path='/product-search/:keyword' component={ViewProducts} />
