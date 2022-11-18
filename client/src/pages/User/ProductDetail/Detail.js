@@ -7,7 +7,7 @@ import Loader from "../../../components/Loader/Loader";
 
 //Styles and components
 import "./Details.css";
-import { getProduct } from "../../../store/methods/productMethods";
+import { addToCart, getProduct } from "../../../store/methods/productMethods";
 import Navbar from "../../../components/Navbar/Navbar";
 
 export default function Detail({ history }) {
@@ -25,6 +25,11 @@ export default function Detail({ history }) {
   const buyNowHandler = () => {
     history.push(`/cart/${id}?qty=${qty}`);
   };
+
+  const addToCartHandler = (e) => {
+    e.preventDefault()
+    dispatch(addToCart(id, qty))
+  }
 
   return (
     <>
@@ -108,6 +113,20 @@ export default function Detail({ history }) {
                 >
                   {product.quantity > 0 ? "Buy Now" : "Out of Stock"}
                 </button>
+                <div>
+                  <button
+                    onClick={addToCartHandler}
+                    className={
+                      product.quantity === 0
+                        ? "btn_status btn_disabled"
+                        : "btn btn_status"
+                    }
+                    type="button"
+                    disabled={product.quantity === 0}
+                  >
+                    {product.quantity > 0 ? "Add to Cart" : "Out of Stock"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
