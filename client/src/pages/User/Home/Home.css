@@ -53,3 +53,24 @@
   margin-top: 0.5rem;
 }
 
+.home_section {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(245, 246, 252, 0.25),
+      rgba(70, 64, 68, 0.75)
+    ),
+    url("https://img-cdn.inc.com/image/upload/w_1920,h_1080,c_fill/images/panoramic/GettyImages-900301626_437925_t2i3bm.jpg");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 40vh;
+}
+.auth_content {
+  margin: 7% 0;
+}
+.home_search{
+  display: flex;
+  justify-content: center;
+  margin-left: 20%;
+}

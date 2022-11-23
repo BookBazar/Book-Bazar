@@ -77,6 +77,48 @@ export default function Products() {
       <div>
         <Navbar />
       </div>
+      <div className="home_section">
+        <div className="auth_content">
+          <div className="weblogintop">
+            <h1 className="webmaintitle">{userStore.storeName}</h1>
+            <h3 style={{ fontSize: "1.5rem" }}>{userStore.contact}</h3>
+          </div>
+          <div className="ttp">
+            <h3>{userStore.address}</h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Search */}
+      <div className="home_search">
+        <div className="content_panel">
+          <div className="form_container">
+            <div className="row ml-minus-15 mr-minus-15">
+              <div className="col-6 p-15">
+                <div className="create_card">
+                  <div className="group">
+                    <input
+                      type="text"
+                      naem="q"
+                      className="group__control"
+                      placeholder="Search"
+                      onChange={(e) => setKeyword(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      className="btn"
+                      style={{ marginLeft: "1rem" }}
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="product_container">
         <Toaster
@@ -91,69 +133,6 @@ export default function Products() {
         />
 
         <div className="products_content">
-          {/* Search */}
-          <div className="content_panel">
-            <div className="form_container">
-              <div className="row ml-minus-15 mr-minus-15">
-                <div className="col-6 p-15">
-                  <div className="create_card">
-                    <div className="group">
-                      <input
-                        type="text"
-                        naem="q"
-                        className="group__control"
-                        placeholder="Search"
-                        onChange={(e) => setKeyword(e.target.value)}
-                      />
-                      <button
-                        type="submit"
-                        className="btn"
-                        style={{ marginLeft: "1rem" }}
-                      >
-                        Search
-                      </button>
-                    </div>
-                  </div>
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="ml-minus-15" key={userStore._id}>
-            <div className="col-8 p-15">
-              <div className="store_container">
-                <div className="item_image_container">
-                  <img
-                    src={userStore.image}
-                    alt={userStore.storeName}
-                    className="item_image"
-                    style={{
-                      width: "200px",
-                      height: "300px",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <div className="item_content">
-                  <h2>{userStore.storeName}</h2>
-                  <h3>
-                    <strong>Contact Number</strong> {userStore.contact}
-                  </h3>
-                  <h3>
-                    <strong>Email</strong> {userStore.email}
-                  </h3>
-                  <h3>
-                    <strong>Address</strong> {userStore.address}
-                  </h3>
-                  <h3>
-                    <strong>Location</strong> {userStore.location}
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {!loading ? (
             products.map((item) => (
               <div className="ml-minus-15" key={item._id}>
