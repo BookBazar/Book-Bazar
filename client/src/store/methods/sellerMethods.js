@@ -37,6 +37,9 @@ import {
   STORE_REVIEWED_REQUEST,
   STORE_REVIEWED_SUCCESS,
   STORE_REVIEWED_FAIL,
+  FETCH_PRINTING_PRESS_REQUEST,
+  FETCH_PRINTING_PRESS_SUCCESS,
+  FETCH_PRINTING_PRESS_FAIL,
 } from "../constants/sellerConstants";
 
 export const createStore = (info) => {
@@ -355,6 +358,37 @@ export const isStoreReviewed = (id) => {
       dispatch({
         type: STORE_REVIEWED_FAIL,
         payload: [error.response.data],
+      });
+    }
+  };
+};
+
+export const getAllPrintingPress = () => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      dispatch({ type: FETCH_PRINTING_PRESS_REQUEST });
+      const { data } = await axios.get(
+        "/api/seller/get-all-printing-press",
+        config
+      );
+      dispatch({
+        type: FETCH_PRINTING_PRESS_SUCCESS,
+        payload: data.printingPress,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_PRINTING_PRESS_FAIL,
+        payload: error.response.data.errors,
       });
     }
   };

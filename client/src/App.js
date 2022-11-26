@@ -38,6 +38,13 @@ import Summary from "./pages/User/Place Order/Summary";
 import Setting from "./pages/User/Setting/Setting";
 import MyOrders from "./pages/User/MyOrders/MyOrders";
 
+
+import PrintingHome from "./pages/PrintingPress/Home/Home";
+import PrintingRequest from "./pages/PrintingPress/PrintingRequest/Request";
+import PrintingShipping from "./pages/PrintingPress/Shipping/Shipping";
+import PrintingPayment from "./pages/PrintingPress/Payment/Payment";
+import PrintingSummary from "./pages/PrintingPress/Place Order/Summary";
+
 export default function App() {
   return (  
     <Provider store={Store}>
@@ -71,6 +78,13 @@ export default function App() {
           <PrivateRoute path='/order-detail/:id' exact component={OrderDetail} />
           <PrivateRoute path='/setting' exact component={Setting} />
           <PrivateRoute path='/my-orders' exact component={MyOrders} />
+
+          <PrivateRoute path='/printing-homepage' exact component={PrintingHome} />
+          <PrivateRoute path='/printing-request/:id' exact component={PrintingRequest} />
+          <PrivateRoute path='/printing-shipping' exact component={PrintingShipping} />
+          <PrivateRoute path='/printing-payment' exact component={PrintingPayment} />
+          <PrivateRoute path='/printing-placeorder' exact component={PrintingSummary} />
+
         </Switch>
       </BrowserRouter>
     </Provider>

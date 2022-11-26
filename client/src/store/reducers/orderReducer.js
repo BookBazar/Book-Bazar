@@ -24,6 +24,13 @@ import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_RESET,
   ORDER_CREATE_SUCCESS,
+  PRINTING_ORDER_CREATE_FAIL,
+  PRINTING_ORDER_CREATE_REQUEST,
+  PRINTING_ORDER_CREATE_RESET,
+  PRINTING_ORDER_CREATE_SUCCESS,
+  PRINTING_PRESS_ORDER_FAIL,
+  PRINTING_PRESS_ORDER_REQUEST,
+  PRINTING_PRESS_ORDER_SUCCESS,
 } from "../constants/orderConstants";
 
 const initialState = {
@@ -33,6 +40,8 @@ const initialState = {
   orders: [],
   specificStoreOrders: [],
   userOrders: [],
+  printingItems: {},
+  printingOrder: [],
   errors: [],
 };
 
@@ -56,6 +65,33 @@ export const CreateOrderReducer = (state = initialState, action) => {
       loading: false,
       success: false,
       order: [],
+      errors: [],
+    };
+  } else {
+    return state;
+  }
+};
+
+export const PrintingCreateOrderReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === PRINTING_ORDER_CREATE_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === PRINTING_ORDER_CREATE_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      order: payload,
+      errors: [],
+    };
+  } else if (PRINTING_ORDER_CREATE_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else if (type === PRINTING_ORDER_CREATE_RESET) {
+    return {
+      ...state,
+      loading: false,
+      success: false,
+      printingOrder: [],
       errors: [],
     };
   } else {
@@ -190,6 +226,25 @@ export const FetchSpecificStoreOrdersReducer = (
       errors: [],
     };
   } else if (FETCH_SPECIFIC_STORE_ORDERS_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const PrintingPressReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === PRINTING_PRESS_ORDER_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === PRINTING_PRESS_ORDER_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      printingItems: payload,
+      errors: [],
+    };
+  } else if (PRINTING_PRESS_ORDER_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

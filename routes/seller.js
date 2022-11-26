@@ -17,6 +17,7 @@ const {
   createReview,
   getUserStore,
   isAlreadyReviewed,
+  getAllPrintingPress,
 } = require("../controllers/seller");
 
 router.route("/create-store").post(verifyUser, shopValidations, createShop);
@@ -35,5 +36,6 @@ router.route("/delete-product/:id").delete(verifyUser, deleteProduct);
 router.route("/get-stores").get(getStores);
 router.route("/create-review/:id").post(verifyUser, createReview);
 router.route("/get-store-review/:id").get(verifyUser, isAlreadyReviewed);
+router.route("/get-all-printing-press").get(verifyUser, getAllPrintingPress)
 
 module.exports = router;

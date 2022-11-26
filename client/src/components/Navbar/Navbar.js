@@ -38,6 +38,11 @@ export default function Navbar() {
 
         <div className="menu">
           <li>
+            <Link to="/printing-homepage">
+              <div className="links">Printing Press</div>
+            </Link>
+          </li>
+          <li>
             <Link to="/my-orders">
               <div className="links">My Orders</div>
             </Link>

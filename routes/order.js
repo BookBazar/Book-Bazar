@@ -10,9 +10,11 @@ const {
   completeOrder,
   getUserOrders,
   getSpecificStoreOrders,
+  addPrintingOrderItems,
 } = require("../controllers/order");
 
 router.route("/add-order").post(verifyUser, addOrderItems);
+router.route("/add-printing-order").post(verifyUser, addPrintingOrderItems);
 router.route("/get-orders/:orderType").get(verifyUser, getOrders);
 router.route("/get-order/:id").get(verifyUser, getOrder);
 router.route("/approve-order/:id").put(approveOrder);

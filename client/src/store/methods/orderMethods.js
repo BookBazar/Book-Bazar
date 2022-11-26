@@ -24,6 +24,12 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
+  PRINTING_ORDER_CREATE_FAIL,
+  PRINTING_ORDER_CREATE_REQUEST,
+  PRINTING_ORDER_CREATE_SUCCESS,
+  PRINTING_PRESS_ORDER_FAIL,
+  PRINTING_PRESS_ORDER_REQUEST,
+  PRINTING_PRESS_ORDER_SUCCESS,
 } from "../constants/orderConstants";
 import { CART_CLEAR_ITEMS } from "../constants/productConstants";
 
@@ -51,6 +57,32 @@ export const createOrder = (order) => {
     }
   };
 };
+
+export const printingCreateOrder = (order) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: PRINTING_ORDER_CREATE_REQUEST });
+    try {
+      console.log("Enter")
+      const { data } = await axios.post("/api/order/add-printing-order", order, config);
+      dispatch({ type: PRINTING_ORDER_CREATE_SUCCESS, payload: data.createdOrder });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: PRINTING_ORDER_CREATE_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
 
 export const getOrders = (orderType) => {
   return async (dispatch, getState) => {
@@ -91,10 +123,7 @@ export const getOrder = (id) => {
     };
     dispatch({ type: FETCH_ORDER_REQUEST });
     try {
-      const { data } = await axios.get(
-        `/api/order/get-order/${id}`,
-        config
-      );
+      const { data } = await axios.get(`/api/order/get-order/${id}`, config);
       dispatch({ type: FETCH_ORDER_SUCCESS, payload: data.order });
     } catch (error) {
       console.log(error);
@@ -214,12 +243,36 @@ export const getSpecificStoreOrders = (id) => {
     };
     dispatch({ type: FETCH_SPECIFIC_STORE_ORDERS_REQUEST });
     try {
-      const { data } = await axios.get(`/api/order/get-specific-store-orders/${id}`, config);
-      dispatch({ type: FETCH_SPECIFIC_STORE_ORDERS_SUCCESS, payload: data.myOrders });
+      const { data } = await axios.get(
+        `/api/order/get-specific-store-orders/${id}`,
+        config
+      );
+      dispatch({
+        type: FETCH_SPECIFIC_STORE_ORDERS_SUCCESS,
+        payload: data.myOrders,
+      });
     } catch (error) {
       console.log(error);
       dispatch({
         type: FETCH_SPECIFIC_STORE_ORDERS_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const printingPressOrder = (info) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: PRINTING_PRESS_ORDER_REQUEST });
+    try {
+      dispatch({ type: PRINTING_PRESS_ORDER_SUCCESS, payload: info });
+      localStorage.setItem(
+        "printingPress",
+        JSON.stringify(getState().PrintingPressReducer.printingItems)
+      );
+    } catch (error) {
+      dispatch({
+        type: PRINTING_PRESS_ORDER_FAIL,
         payload: error.response.data.errors,
       });
     }

@@ -1,5 +1,6 @@
 const orderModel = require("../models/Order");
 const productModel = require("../models/Product");
+const printingModel = require("../models/PrintingOrder");
 
 /**
  * @description Add Order Item
@@ -26,6 +27,35 @@ module.exports.addOrderItems = async (req, res) => {
         createdOrders.push(createdOrder);
       }
       return res.status(200).json(createdOrders);
+    } catch (error) {
+      return res.status(500).json({ errors: error });
+    }
+  }
+};
+
+/**
+ * @description Add Printing Order Item
+ * @route POST /api/order/add-printing-order
+ * @access Private
+ */
+module.exports.addPrintingOrderItems = async (req, res) => {
+  const { _id } = req.user;
+
+  const { printingItems, shippingAddress, paymentMethod, price } = req.body;
+
+  if (printingItems && printingItems.length === 0) {
+    return res.status(400).json({ errors: [{ msg: "No Order Items" }] });
+  } else {
+    try {
+      const createdOrder = await printingModel.create({
+        user: _id,
+        printingItems: printingItems[0],
+        shippingAddress,
+        paymentMethod,
+        price,
+      });
+
+      return res.status(200).json(createdOrder);
     } catch (error) {
       return res.status(500).json({ errors: error });
     }

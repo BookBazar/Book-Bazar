@@ -35,6 +35,9 @@ import {
   STORE_REVIEWED_REQUEST,
   STORE_REVIEWED_SUCCESS,
   STORE_REVIEWED_FAIL,
+  FETCH_PRINTING_PRESS_REQUEST,
+  FETCH_PRINTING_PRESS_SUCCESS,
+  FETCH_PRINTING_PRESS_FAIL,
 } from "../constants/sellerConstants";
 
 const initialState = {
@@ -49,6 +52,7 @@ const initialState = {
   userStore: {},
   product: [],
   products: [],
+  allPrintingPress: [],
 };
 
 export const CreateStoreReducer = (state = initialState, action) => {
@@ -269,6 +273,25 @@ export const StoreReviewReducer = (state = initialState, action) => {
       errors: [],
     };
   } else if (type === STORE_REVIEWED_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const AllPrintingPressReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === FETCH_PRINTING_PRESS_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_PRINTING_PRESS_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      allPrintingPress: payload,
+      errors: [],
+    };
+  } else if (type === FETCH_PRINTING_PRESS_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

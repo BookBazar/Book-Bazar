@@ -23,6 +23,7 @@ import {
   CreateReviewReducer,
   FetchUserStoreReducer,
   StoreReviewReducer,
+  AllPrintingPressReducer,
 } from "./reducers/sellerReducers";
 
 import {
@@ -50,6 +51,8 @@ import {
   CompleteOrderReducer,
   FetchUserOrdersReducer,
   FetchSpecificStoreOrdersReducer,
+  PrintingPressReducer,
+  PrintingCreateOrderReducer,
 } from "./reducers/orderReducer";
 
 const rootReducers = combineReducers({
@@ -71,6 +74,7 @@ const rootReducers = combineReducers({
   FetchStoresReducer,
   CreateReviewReducer,
   StoreReviewReducer,
+  AllPrintingPressReducer,
 
   AdminLoginReducer,
   StoreRequestReducer,
@@ -92,6 +96,8 @@ const rootReducers = combineReducers({
   CompleteOrderReducer,
   FetchUserOrdersReducer,
   FetchSpecificStoreOrdersReducer,
+  PrintingPressReducer,
+  PrintingCreateOrderReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
@@ -106,11 +112,16 @@ const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
   ? JSON.parse(localStorage.getItem("paymentMethod"))
   : {};
 
+const printingItemsFromStorage = localStorage.getItem("printingPress")
+  ? JSON.parse(localStorage.getItem("printingPress"))
+  : [];
+
 const initialState = {
   cartReducer: {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
     paymentMethod: paymentMethodFromStorage,
+    printingItems: printingItemsFromStorage,
   },
 };
 

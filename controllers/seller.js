@@ -327,7 +327,8 @@ exports.getStores = async (req, res) => {
         },
       }
     : {};
-  try {
+
+    try {
     const booksExist = await productSchema.find({ ...keyword });
     let userIds = [];
     if (booksExist.length !== 0) {
@@ -421,3 +422,13 @@ module.exports.isAlreadyReviewed = async (req, res) => {
     return res.status(200).json(reviewed);
   }
 };
+/**
+ * @description Get Printing press stores
+ * @route GET /api/seller/get-all-printing-press
+ * @access Private
+ */
+module.exports.getAllPrintingPress = async (req, res) => {
+  const printingPress = await sellerModel.find({storeType: "printing", isApproved: true, isBlocked: false})
+  if(!printingPress) return res.status(401).json({ msg: "Something went wrong" })
+  return res.status(200).json({printingPress})  
+}
