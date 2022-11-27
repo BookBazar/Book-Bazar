@@ -130,7 +130,7 @@ module.exports.getOrder = async (req, res) => {
  * @route GET /api/order/get-printing-order
  * @access Private
  */
- module.exports.getPrintingOrder = async (req, res) => {
+module.exports.getPrintingOrder = async (req, res) => {
   const { id } = req.params;
 
   const order = await printingModel.find({ _id: { $eq: id } });
@@ -162,7 +162,7 @@ module.exports.approveOrder = async (req, res) => {
  * @route PUT /api/order/approve-printing-order
  * @access Private
  */
- module.exports.approvePrintingOrder = async (req, res) => {
+module.exports.approvePrintingOrder = async (req, res) => {
   const { id } = req.params;
   await printingModel.updateOne(
     { _id: { $eq: id } },
@@ -175,7 +175,6 @@ module.exports.approveOrder = async (req, res) => {
   );
   res.status(200).json({ success: true });
 };
-
 
 /**
  * @description Cancel Order
@@ -201,7 +200,7 @@ module.exports.cancelOrder = async (req, res) => {
  * @route PUT /api/order/cancel-printing-order
  * @access Private
  */
- module.exports.cancelPrintingOrder = async (req, res) => {
+module.exports.cancelPrintingOrder = async (req, res) => {
   const { id } = req.params;
   await printingModel.updateOne(
     { _id: { $eq: id } },
@@ -214,7 +213,6 @@ module.exports.cancelOrder = async (req, res) => {
   );
   res.status(200).json({ success: true });
 };
-
 
 /**
  * @description Complete Order
@@ -240,7 +238,7 @@ module.exports.completeOrder = async (req, res) => {
  * @route PUT /api/order/complete-printing-order
  * @access Private
  */
- module.exports.completePrintingOrder = async (req, res) => {
+module.exports.completePrintingOrder = async (req, res) => {
   const { id } = req.params;
   await printingModel.updateOne(
     { _id: { $eq: id } },
@@ -262,6 +260,18 @@ module.exports.completeOrder = async (req, res) => {
 module.exports.getUserOrders = async (req, res) => {
   const { _id } = req.user;
   const myOrders = await orderModel.find({ user: { $eq: _id } });
+  if (!myOrders) return res.status(401).json({ msg: "Something went wrong" });
+  return res.status(200).json({ myOrders });
+};
+
+/**
+ * @description Get user Printing orders
+ * @route GET /api/order/get-user-printing-orders
+ * @access Private
+ */
+module.exports.getUserPrintingOrders = async (req, res) => {
+  const { _id } = req.user;
+  const myOrders = await printingModel.find({ user: { $eq: _id } });
   if (!myOrders) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ myOrders });
 };

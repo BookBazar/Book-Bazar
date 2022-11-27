@@ -58,6 +58,7 @@ import {
   CancelPrintingOrderReducer,
   CompletePrintingOrderReducer,
   FetchPrintingOrderReducer,
+  FetchUserPrintingOrdersReducer,
 } from "./reducers/orderReducer";
 
 const rootReducers = combineReducers({
@@ -108,6 +109,7 @@ const rootReducers = combineReducers({
   CancelPrintingOrderReducer,
   CompletePrintingOrderReducer,
   FetchPrintingOrderReducer,
+  FetchUserPrintingOrdersReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

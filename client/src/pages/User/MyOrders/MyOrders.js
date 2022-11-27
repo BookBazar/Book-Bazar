@@ -1,31 +1,32 @@
 import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 
 //Styles and Components
 import "./MyOrders.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import Loader from "../../../components/Loader/Loader";
-import { getUserOrders, getOrder } from "../../../store/methods/orderMethods";
+import {
+  getUserOrders,
+  getUserPrintingOrders,
+} from "../../../store/methods/orderMethods";
 
 export default function MyOrders() {
   const dispatch = useDispatch();
   const { userOrders, loading } = useSelector(
     (state) => state.FetchUserOrdersReducer
   );
-  const { order } = useSelector((state) => state.FetchOrderReducer);
-  const { id } = useParams();
-  const orderType = "Review";
-  console.log(order);
+  const { userPrintingOrders } = useSelector(
+    (state) => state.FetchUserPrintingOrdersReducer
+  );
 
   useEffect(() => {
     dispatch(getUserOrders());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getOrder({ id, orderType }));
-  }, [dispatch, id]);
+    dispatch(getUserPrintingOrders());
+  }, [dispatch]);
 
   return (
     <>
@@ -52,6 +53,9 @@ export default function MyOrders() {
                   <div className="header__item">
                     <p className="filter__link filter__link--number">STATUS</p>
                   </div>
+                  <div className="header__item">
+                    <p className="filter__link filter__link--number">TYPE</p>
+                  </div>
                 </div>
                 <div className="table-content">
                   {userOrders.map((order) => (
@@ -77,6 +81,33 @@ export default function MyOrders() {
                       {order.isCancelled && (
                         <div className="table-data">Cancelled</div>
                       )}
+                      <div className="table-data">Book</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="table-content">
+                  {userPrintingOrders.map((order) => (
+                    <div className="table-row" key={order._id}>
+                      <div className="table-data">
+                        {order.printingItems[0].bookName}
+                      </div>
+                      <div className="table-data">
+                        {order.printingItems[0].numberOfBooks}
+                      </div>
+                      <div className="table-data">PKR {order.price}</div>
+                      {order.isPending && (
+                        <div className="table-data">Pending</div>
+                      )}
+                      {order.isApproved && (
+                        <div className="table-data">Approved</div>
+                      )}
+                      {order.isComplete && (
+                        <div className="table-data">Compelete</div>
+                      )}
+                      {order.isCancelled && (
+                        <div className="table-data">Cancelled</div>
+                      )}
+                      <div className="table-data">Printing Press</div>
                     </div>
                   ))}
                 </div>

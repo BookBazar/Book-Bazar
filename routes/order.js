@@ -16,6 +16,7 @@ const {
   cancelPrintingOrder,
   completePrintingOrder,
   getPrintingOrder,
+  getUserPrintingOrders,
 } = require("../controllers/order");
 
 router.route("/add-order").post(verifyUser, addOrderItems);
@@ -33,6 +34,9 @@ router.route("/cancel-printing-order/:id").put(cancelPrintingOrder);
 router.route("/complete-order/:id").put(completeOrder);
 router.route("/complete-printing-order/:id").put(completePrintingOrder);
 router.route("/get-user-orders").get(verifyUser, getUserOrders);
+router
+  .route("/get-user-printing-orders")
+  .get(verifyUser, getUserPrintingOrders);
 router
   .route("/get-specific-store-orders/:id")
   .get(verifyUser, getSpecificStoreOrders);

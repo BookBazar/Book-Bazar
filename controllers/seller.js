@@ -338,7 +338,7 @@ exports.getStores = async (req, res) => {
     }
 
     const stores = await sellerModel
-      .find({ user: { $in: userIds }, isApproved: true, isBlocked: false })
+      .find({ user: { $in: userIds }, isApproved: true, isBlocked: false, storeType: "book" })
       .sort({ updatedAt: -1 });
     return res.status(200).json({ stores });
   } catch (error) {

@@ -36,6 +36,9 @@ import {
   FETCH_USER_ORDERS_FAIL,
   FETCH_USER_ORDERS_REQUEST,
   FETCH_USER_ORDERS_SUCCESS,
+  FETCH_USER_PRINTING_ORDERS_FAIL,
+  FETCH_USER_PRINTING_ORDERS_REQUEST,
+  FETCH_USER_PRINTING_ORDERS_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -85,7 +88,6 @@ export const printingCreateOrder = (order) => {
     };
     dispatch({ type: PRINTING_ORDER_CREATE_REQUEST });
     try {
-      console.log("Enter");
       const { data } = await axios.post(
         "/api/order/add-printing-order",
         order,
@@ -372,6 +374,36 @@ export const getUserOrders = () => {
       console.log(error);
       dispatch({
         type: FETCH_USER_ORDERS_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const getUserPrintingOrders = () => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: FETCH_USER_PRINTING_ORDERS_REQUEST });
+    try {
+      const { data } = await axios.get(
+        "/api/order/get-user-printing-orders",
+        config
+      );
+      dispatch({
+        type: FETCH_USER_PRINTING_ORDERS_SUCCESS,
+        payload: data.myOrders,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_USER_PRINTING_ORDERS_FAIL,
         payload: error.response.data.errors,
       });
     }
