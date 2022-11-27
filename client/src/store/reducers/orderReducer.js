@@ -2,18 +2,33 @@ import {
   APPROVE_ORDER_FAIL,
   APPROVE_ORDER_REQUEST,
   APPROVE_ORDER_SUCCESS,
+  APPROVE_PRINTING_ORDER_FAIL,
+  APPROVE_PRINTING_ORDER_REQUEST,
+  APPROVE_PRINTING_ORDER_SUCCESS,
   CANCEL_ORDER_FAIL,
   CANCEL_ORDER_REQUEST,
   CANCEL_ORDER_SUCCESS,
+  CANCEL_PRINTING_ORDER_FAIL,
+  CANCEL_PRINTING_ORDER_REQUEST,
+  CANCEL_PRINTING_ORDER_SUCCESS,
   COMPLETE_ORDER_FAIL,
   COMPLETE_ORDER_REQUEST,
   COMPLETE_ORDER_SUCCESS,
+  COMPLETE_PRINTING_ORDER_FAIL,
+  COMPLETE_PRINTING_ORDER_REQUEST,
+  COMPLETE_PRINTING_ORDER_SUCCESS,
   FETCH_ORDERS_FAIL,
   FETCH_ORDERS_REQUEST,
   FETCH_ORDERS_SUCCESS,
   FETCH_ORDER_FAIL,
   FETCH_ORDER_REQUEST,
   FETCH_ORDER_SUCCESS,
+  FETCH_PRINTING_ORDERS_FAIL,
+  FETCH_PRINTING_ORDERS_REQUEST,
+  FETCH_PRINTING_ORDERS_SUCCESS,
+  FETCH_PRINTING_ORDER_FAIL,
+  FETCH_PRINTING_ORDER_REQUEST,
+  FETCH_PRINTING_ORDER_SUCCESS,
   FETCH_SPECIFIC_STORE_ORDERS_FAIL,
   FETCH_SPECIFIC_STORE_ORDERS_REQUEST,
   FETCH_SPECIFIC_STORE_ORDERS_SUCCESS,
@@ -42,6 +57,7 @@ const initialState = {
   userOrders: [],
   printingItems: {},
   printingOrder: [],
+  printingOrders: [],
   errors: [],
 };
 
@@ -118,6 +134,25 @@ export const FetchOrdersReducer = (state = initialState, action) => {
   }
 };
 
+export const FetchPrintingOrdersReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === FETCH_PRINTING_ORDERS_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_PRINTING_ORDERS_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      printingOrders: payload,
+      errors: [],
+    };
+  } else if (FETCH_PRINTING_ORDERS_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
 export const FetchOrderReducer = (state = initialState, action) => {
   const { type, payload } = action;
   if (type === FETCH_ORDER_REQUEST) {
@@ -131,6 +166,25 @@ export const FetchOrderReducer = (state = initialState, action) => {
       errors: [],
     };
   } else if (FETCH_ORDER_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const FetchPrintingOrderReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === FETCH_PRINTING_ORDER_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_PRINTING_ORDER_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      printingOrder: payload,
+      errors: [],
+    };
+  } else if (FETCH_PRINTING_ORDER_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;
@@ -155,6 +209,24 @@ export const ApproveOrderReducer = (state = initialState, action) => {
   }
 };
 
+export const ApprovePrintingOrderReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === APPROVE_PRINTING_ORDER_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === APPROVE_PRINTING_ORDER_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      errors: [],
+    };
+  } else if (APPROVE_PRINTING_ORDER_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
 export const CancelOrderReducer = (state = initialState, action) => {
   const { type, payload } = action;
   if (type === CANCEL_ORDER_REQUEST) {
@@ -173,6 +245,24 @@ export const CancelOrderReducer = (state = initialState, action) => {
   }
 };
 
+export const CancelPrintingOrderReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === CANCEL_PRINTING_ORDER_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === CANCEL_PRINTING_ORDER_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      errors: [],
+    };
+  } else if (CANCEL_PRINTING_ORDER_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
 export const CompleteOrderReducer = (state = initialState, action) => {
   const { type, payload } = action;
   if (type === COMPLETE_ORDER_REQUEST) {
@@ -185,6 +275,24 @@ export const CompleteOrderReducer = (state = initialState, action) => {
       errors: [],
     };
   } else if (COMPLETE_ORDER_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const CompletePrintingOrderReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === COMPLETE_PRINTING_ORDER_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === COMPLETE_PRINTING_ORDER_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      errors: [],
+    };
+  } else if (COMPLETE_PRINTING_ORDER_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

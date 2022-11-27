@@ -126,6 +126,19 @@ module.exports.getOrder = async (req, res) => {
 };
 
 /**
+ * @description Get Printing Order
+ * @route GET /api/order/get-printing-order
+ * @access Private
+ */
+ module.exports.getPrintingOrder = async (req, res) => {
+  const { id } = req.params;
+
+  const order = await printingModel.find({ _id: { $eq: id } });
+  if (!order) return res.status(401).json({ msg: "Something went wrong" });
+  return res.status(200).json({ order });
+};
+
+/**
  * @description Approve Order
  * @route PUT /api/order/approve-order
  * @access Private
@@ -143,6 +156,26 @@ module.exports.approveOrder = async (req, res) => {
   );
   res.status(200).json({ success: true });
 };
+
+/**
+ * @description Approve Printing Order
+ * @route PUT /api/order/approve-printing-order
+ * @access Private
+ */
+ module.exports.approvePrintingOrder = async (req, res) => {
+  const { id } = req.params;
+  await printingModel.updateOne(
+    { _id: { $eq: id } },
+    {
+      isPending: false,
+      isApproved: true,
+      isCancelled: false,
+      isComplete: false,
+    }
+  );
+  res.status(200).json({ success: true });
+};
+
 
 /**
  * @description Cancel Order
@@ -164,6 +197,26 @@ module.exports.cancelOrder = async (req, res) => {
 };
 
 /**
+ * @description Cancel Printing Order
+ * @route PUT /api/order/cancel-printing-order
+ * @access Private
+ */
+ module.exports.cancelPrintingOrder = async (req, res) => {
+  const { id } = req.params;
+  await printingModel.updateOne(
+    { _id: { $eq: id } },
+    {
+      isPending: false,
+      isApproved: false,
+      isCancelled: true,
+      isComplete: false,
+    }
+  );
+  res.status(200).json({ success: true });
+};
+
+
+/**
  * @description Complete Order
  * @route PUT /api/order/complete-order
  * @access Private
@@ -171,6 +224,25 @@ module.exports.cancelOrder = async (req, res) => {
 module.exports.completeOrder = async (req, res) => {
   const { id } = req.params;
   await orderModel.updateOne(
+    { _id: { $eq: id } },
+    {
+      isPending: false,
+      isApproved: false,
+      isCancelled: false,
+      isComplete: true,
+    }
+  );
+  res.status(200).json({ success: true });
+};
+
+/**
+ * @description Complete Printing Order
+ * @route PUT /api/order/complete-printing-order
+ * @access Private
+ */
+ module.exports.completePrintingOrder = async (req, res) => {
+  const { id } = req.params;
+  await printingModel.updateOne(
     { _id: { $eq: id } },
     {
       isPending: false,
@@ -209,4 +281,47 @@ module.exports.getSpecificStoreOrders = async (req, res) => {
   });
   if (!myOrders) return res.status(401).json({ msg: "Something went wrong" });
   return res.status(200).json({ myOrders });
+};
+
+/**
+ * @description Get Pringting Order Item
+ * @route GET /api/order/get-printing-orders
+ * @access Private
+ */
+module.exports.getPrintingOrders = async (req, res) => {
+  const { orderType } = req.params;
+  const { _id } = req.user;
+
+  if (orderType === "pending") {
+    const orders = await printingModel.find({
+      "printingItems.storeOwner": { $eq: _id },
+      isPending: true,
+    });
+    if (!orders) return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ orders });
+  }
+  if (orderType === "approved") {
+    const orders = await printingModel.find({
+      "printingItems.storeOwner": { $eq: _id },
+      isApproved: true,
+    });
+    if (!orders) return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ orders });
+  }
+  if (orderType === "complete") {
+    const orders = await printingModel.find({
+      "printingItems.storeOwner": { $eq: _id },
+      isComplete: true,
+    });
+    if (!orders) return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ orders });
+  }
+  if (orderType === "cancelled") {
+    const orders = await printingModel.find({
+      "printingItems.storeOwner": { $eq: _id },
+      isCancelled: true,
+    });
+    if (!orders) return res.status(401).json({ msg: "Something went wrong" });
+    return res.status(200).json({ orders });
+  }
 };

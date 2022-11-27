@@ -3,18 +3,33 @@ import {
   APPROVE_ORDER_FAIL,
   APPROVE_ORDER_REQUEST,
   APPROVE_ORDER_SUCCESS,
+  APPROVE_PRINTING_ORDER_FAIL,
+  APPROVE_PRINTING_ORDER_REQUEST,
+  APPROVE_PRINTING_ORDER_SUCCESS,
   CANCEL_ORDER_FAIL,
   CANCEL_ORDER_REQUEST,
   CANCEL_ORDER_SUCCESS,
+  CANCEL_PRINTING_ORDER_FAIL,
+  CANCEL_PRINTING_ORDER_REQUEST,
+  CANCEL_PRINTING_ORDER_SUCCESS,
   COMPLETE_ORDER_FAIL,
   COMPLETE_ORDER_REQUEST,
   COMPLETE_ORDER_SUCCESS,
+  COMPLETE_PRINTING_ORDER_FAIL,
+  COMPLETE_PRINTING_ORDER_REQUEST,
+  COMPLETE_PRINTING_ORDER_SUCCESS,
   FETCH_ORDERS_FAIL,
   FETCH_ORDERS_REQUEST,
   FETCH_ORDERS_SUCCESS,
   FETCH_ORDER_FAIL,
   FETCH_ORDER_REQUEST,
   FETCH_ORDER_SUCCESS,
+  FETCH_PRINTING_ORDERS_FAIL,
+  FETCH_PRINTING_ORDERS_REQUEST,
+  FETCH_PRINTING_ORDERS_SUCCESS,
+  FETCH_PRINTING_ORDER_FAIL,
+  FETCH_PRINTING_ORDER_REQUEST,
+  FETCH_PRINTING_ORDER_SUCCESS,
   FETCH_SPECIFIC_STORE_ORDERS_FAIL,
   FETCH_SPECIFIC_STORE_ORDERS_REQUEST,
   FETCH_SPECIFIC_STORE_ORDERS_SUCCESS,
@@ -70,9 +85,16 @@ export const printingCreateOrder = (order) => {
     };
     dispatch({ type: PRINTING_ORDER_CREATE_REQUEST });
     try {
-      console.log("Enter")
-      const { data } = await axios.post("/api/order/add-printing-order", order, config);
-      dispatch({ type: PRINTING_ORDER_CREATE_SUCCESS, payload: data.createdOrder });
+      console.log("Enter");
+      const { data } = await axios.post(
+        "/api/order/add-printing-order",
+        order,
+        config
+      );
+      dispatch({
+        type: PRINTING_ORDER_CREATE_SUCCESS,
+        payload: data.createdOrder,
+      });
     } catch (error) {
       console.log(error);
       dispatch({
@@ -82,7 +104,6 @@ export const printingCreateOrder = (order) => {
     }
   };
 };
-
 
 export const getOrders = (orderType) => {
   return async (dispatch, getState) => {
@@ -105,6 +126,33 @@ export const getOrders = (orderType) => {
       console.log(error);
       dispatch({
         type: FETCH_ORDERS_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const getPrintingOrders = (orderType) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: FETCH_PRINTING_ORDERS_REQUEST });
+    try {
+      const { data } = await axios.get(
+        `/api/order/get-printing-orders/${orderType}`,
+        config
+      );
+      dispatch({ type: FETCH_PRINTING_ORDERS_SUCCESS, payload: data.orders });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_PRINTING_ORDERS_FAIL,
         payload: error.response.data.errors,
       });
     }
@@ -135,6 +183,33 @@ export const getOrder = (id) => {
   };
 };
 
+export const getPrintingOrder = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: FETCH_PRINTING_ORDER_REQUEST });
+    try {
+      const { data } = await axios.get(
+        `/api/order/get-printing-order/${id}`,
+        config
+      );
+      dispatch({ type: FETCH_PRINTING_ORDER_SUCCESS, payload: data.order });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_PRINTING_ORDER_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
 export const approveOrder = (id) => {
   return async (dispatch, getState) => {
     const {
@@ -153,6 +228,30 @@ export const approveOrder = (id) => {
       console.log(error);
       dispatch({
         type: APPROVE_ORDER_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const approvePrintingOrder = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: APPROVE_PRINTING_ORDER_REQUEST });
+    try {
+      await axios.put(`/api/order/approve-printing-order/${id}`, config);
+      dispatch({ type: APPROVE_PRINTING_ORDER_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: APPROVE_PRINTING_ORDER_FAIL,
         payload: error.response.data.errors,
       });
     }
@@ -183,6 +282,30 @@ export const cancelOrder = (id) => {
   };
 };
 
+export const cancelPrintingOrder = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: CANCEL_PRINTING_ORDER_REQUEST });
+    try {
+      await axios.put(`/api/order/cancel-printing-order/${id}`, config);
+      dispatch({ type: CANCEL_PRINTING_ORDER_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: CANCEL_PRINTING_ORDER_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
 export const completeOrder = (id) => {
   return async (dispatch, getState) => {
     const {
@@ -201,6 +324,30 @@ export const completeOrder = (id) => {
       console.log(error);
       dispatch({
         type: COMPLETE_ORDER_FAIL,
+        payload: error.response.data.errors,
+      });
+    }
+  };
+};
+
+export const completePrintingOrder = (id) => {
+  return async (dispatch, getState) => {
+    const {
+      LoginReducer: { token },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    dispatch({ type: COMPLETE_PRINTING_ORDER_REQUEST });
+    try {
+      await axios.put(`/api/order/complete-printing-order/${id}`, config);
+      dispatch({ type: COMPLETE_PRINTING_ORDER_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: COMPLETE_PRINTING_ORDER_FAIL,
         payload: error.response.data.errors,
       });
     }

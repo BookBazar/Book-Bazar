@@ -44,6 +44,8 @@ import PrintingRequest from "./pages/PrintingPress/PrintingRequest/Request";
 import PrintingShipping from "./pages/PrintingPress/Shipping/Shipping";
 import PrintingPayment from "./pages/PrintingPress/Payment/Payment";
 import PrintingSummary from "./pages/PrintingPress/Place Order/Summary";
+import PrinitngOrders from "./pages/PrintingPress/Orders/Orders";
+import PrintingDetail from "./pages/PrintingPress/OrderDetail/Detail";
 
 export default function App() {
   return (  
@@ -84,7 +86,8 @@ export default function App() {
           <PrivateRoute path='/printing-shipping' exact component={PrintingShipping} />
           <PrivateRoute path='/printing-payment' exact component={PrintingPayment} />
           <PrivateRoute path='/printing-placeorder' exact component={PrintingSummary} />
-
+          <PrivateRoute path='/printing-orders' exact component={PrinitngOrders} />
+          <PrivateRoute path='/printing-order-detail/:id' exact component={PrintingDetail} />
         </Switch>
       </BrowserRouter>
     </Provider>

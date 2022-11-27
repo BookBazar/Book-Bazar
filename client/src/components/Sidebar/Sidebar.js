@@ -13,9 +13,11 @@ import { AiTwotoneSetting } from "react-icons/ai";
 import { BsFillCartFill } from "react-icons/bs";
 import { BsListNested } from "react-icons/bs";
 import { USER_LOGOUT } from "../../store/constants/authConstants";
+import { getStore } from "../../store/methods/sellerMethods";
 
 export default function Sidebar() {
   const { username, isSeller } = useSelector((state) => state.UserInfoReducer);
+  const { specificStore } = useSelector((state) => state.FetchStoreReducer);
 
   const dispatch = useDispatch();
 
@@ -23,9 +25,15 @@ export default function Sidebar() {
     localStorage.removeItem("USER_TOKEN");
     dispatch({ type: USER_LOGOUT });
   };
+
   //Get user info
   useEffect(() => {
     dispatch(userInfo());
+  }, [dispatch]);
+
+  //Get Store
+  useEffect(() => {
+    dispatch(getStore());
   }, [dispatch]);
 
   return (
@@ -39,30 +47,43 @@ export default function Sidebar() {
           </Link>
           {isSeller ? (
             <>
-              <NavLink to="/dashboard">
-                <li>
-                  <BsListNested className="sidebar_icon" />
-                  <span className="sidebar_title">Products List</span>
-                </li>
-              </NavLink>
-              <NavLink to="/create-products">
-                <li>
-                  <BsPlusLg className="sidebar_icon" />
-                  <span className="sidebar_title">Add Products</span>
-                </li>
-              </NavLink>
+              {specificStore.storeType === "book" && (
+                <>
+                  <NavLink to="/dashboard">
+                    <li>
+                      <BsListNested className="sidebar_icon" />
+                      <span className="sidebar_title">Products List</span>
+                    </li>
+                  </NavLink>
+                  <NavLink to="/create-products">
+                    <li>
+                      <BsPlusLg className="sidebar_icon" />
+                      <span className="sidebar_title">Add Products</span>
+                    </li>
+                  </NavLink>
+                </>
+              )}
               <NavLink to="/store-details">
                 <li>
                   <BiStore className="sidebar_icon" />
                   <span className="sidebar_title">Store Details</span>
                 </li>
               </NavLink>
-              <NavLink to="/orders-dashboard">
-                <li>
-                  <BsFillCartFill className="sidebar_icon" />
-                  <span className="sidebar_title">Orders</span>
-                </li>
-              </NavLink>
+              {specificStore.storeType === "book" ? (
+                <NavLink to="/orders-dashboard">
+                  <li>
+                    <BsFillCartFill className="sidebar_icon" />
+                    <span className="sidebar_title">Orders</span>
+                  </li>
+                </NavLink>
+              ) : (
+                <NavLink to="/printing-orders">
+                  <li>
+                    <BsFillCartFill className="sidebar_icon" />
+                    <span className="sidebar_title">Orders</span>
+                  </li>
+                </NavLink>
+              )}
             </>
           ) : (
             ""

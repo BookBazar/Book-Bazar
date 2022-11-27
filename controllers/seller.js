@@ -144,7 +144,7 @@ exports.addProduct = async (req, res) => {
 
 /**
  * @description Get Store
- * @route GET /api/seller/get-store?id
+ * @route GET /api/seller/get-store
  * @access Private
  */
 exports.getStore = async (req, res) => {
