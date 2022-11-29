@@ -219,6 +219,7 @@ export default function Request({history}) {
                     <input
                       type="date"
                       id="date"
+                      min={new Date().toISOString().split('T')[0]}
                       className="group__control"
                       onChange={(e) => setDate(e.target.value)}
                       value={date}

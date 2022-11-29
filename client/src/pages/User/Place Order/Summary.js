@@ -87,6 +87,11 @@ export default function Summary({ history }) {
                 {cart.shippingAddress.postalCode},{" "}
                 {cart.shippingAddress.country}
               </p>
+              <div style={{ marginTop: "2rem" }}>
+                <Link to="/shipping" className="btn">
+                  Edit Address
+                </Link>
+              </div>
             </div>
             <div className="summary_content_payment">
               <h2 className="summary_title_h2">Payment Method</h2>

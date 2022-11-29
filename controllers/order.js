@@ -145,6 +145,8 @@ module.exports.getPrintingOrder = async (req, res) => {
  */
 module.exports.approveOrder = async (req, res) => {
   const { id } = req.params;
+  const { qty, productId } = req.body;
+
   await orderModel.updateOne(
     { _id: { $eq: id } },
     {
@@ -154,6 +156,12 @@ module.exports.approveOrder = async (req, res) => {
       isComplete: false,
     }
   );
+
+  const seller = await productModel.findOne({ _id: { $eq: productId } });
+  if (seller.quantity >= qty) {
+    seller.quantity = seller.quantity - qty;
+    await seller.save();
+  }
   res.status(200).json({ success: true });
 };
 

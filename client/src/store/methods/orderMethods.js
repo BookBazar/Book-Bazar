@@ -212,7 +212,7 @@ export const getPrintingOrder = (id) => {
   };
 };
 
-export const approveOrder = (id) => {
+export const approveOrder = (data) => {
   return async (dispatch, getState) => {
     const {
       LoginReducer: { token },
@@ -223,8 +223,9 @@ export const approveOrder = (id) => {
       },
     };
     dispatch({ type: APPROVE_ORDER_REQUEST });
+    console.log(data.qty);
     try {
-      await axios.put(`/api/order/approve-order/${id}`, config);
+      await axios.put(`/api/order/approve-order/${data.id}`, data, config);
       dispatch({ type: APPROVE_ORDER_SUCCESS });
     } catch (error) {
       console.log(error);

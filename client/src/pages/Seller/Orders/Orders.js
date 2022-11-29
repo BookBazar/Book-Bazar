@@ -19,6 +19,7 @@ export default function Orders() {
   const { orders } = useSelector((state) => state.FetchOrdersReducer);
   const dispatch = useDispatch();
 
+  console.log(orders);
   //Fetch Orders
   useEffect(() => {
     dispatch(getOrders(orderType));
@@ -26,7 +27,9 @@ export default function Orders() {
 
   //Approve Order
   const handleApprove = (data) => {
-    dispatch(approveOrder(data.id));
+    dispatch(
+      approveOrder({ id: data.id, qty: data.qty, productId: data.productId })
+    );
     window.location.reload();
   };
 
@@ -110,6 +113,9 @@ export default function Orders() {
 
                       <div className="order_item_content">
                         <h2>{item.orderItems[0].bookName}</h2>
+                        <div>
+                          <h4>Quantity = {item.orderItems[0].qty}</h4>
+                        </div>{" "}
                       </div>
                       {item.isPending === true && (
                         <div className="order_item_btn">
@@ -121,7 +127,13 @@ export default function Orders() {
                           </Link>
                           <button
                             className="btn btn-light orderscardbtn"
-                            onClick={() => handleApprove({ id: item._id })}
+                            onClick={() =>
+                              handleApprove({
+                                id: item._id,
+                                qty: item.orderItems[0].qty,
+                                productId: item.orderItems[0].productId,
+                              })
+                            }
                           >
                             Approve
                           </button>
@@ -164,7 +176,6 @@ export default function Orders() {
                           >
                             View
                           </Link>
-                         
                         </div>
                       )}
                     </div>
