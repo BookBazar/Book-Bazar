@@ -97,6 +97,7 @@ export default function Setting() {
                     id="email"
                     className="group__control"
                     placeholder="Enter email"
+                    readOnly
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />

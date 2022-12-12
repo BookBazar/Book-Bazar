@@ -14,10 +14,13 @@ import { BsFillCartFill } from "react-icons/bs";
 import { BsListNested } from "react-icons/bs";
 import { USER_LOGOUT } from "../../store/constants/authConstants";
 import { getStore } from "../../store/methods/sellerMethods";
+import Rating from "../Rating/Rating";
 
 export default function Sidebar() {
   const { username, isSeller } = useSelector((state) => state.UserInfoReducer);
   const { specificStore } = useSelector((state) => state.FetchStoreReducer);
+
+  console.log(specificStore);
 
   const dispatch = useDispatch();
 
@@ -47,6 +50,12 @@ export default function Sidebar() {
           </Link>
           {isSeller ? (
             <>
+              <div className="home_rating">
+                <Rating
+                  value={specificStore.rating}
+                  text={`${specificStore.numReviews} reviews`}
+                />
+              </div>
               {specificStore.storeType === "book" && (
                 <>
                   <NavLink to="/dashboard">

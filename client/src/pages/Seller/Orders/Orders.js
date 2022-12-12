@@ -27,16 +27,16 @@ export default function Orders() {
 
   //Approve Order
   const handleApprove = (data) => {
-    dispatch(
-      approveOrder({ id: data.id, qty: data.qty, productId: data.productId })
-    );
+    dispatch(approveOrder(data.id));
     window.location.reload();
   };
 
   //Cancel Order
   const handleCancel = (data) => {
     console.log(data.id);
-    dispatch(cancelOrder(data.id));
+    dispatch(
+      cancelOrder({ id: data.id, qty: data.qty, productId: data.productId })
+    );
     window.location.reload();
   };
 
@@ -130,8 +130,6 @@ export default function Orders() {
                             onClick={() =>
                               handleApprove({
                                 id: item._id,
-                                qty: item.orderItems[0].qty,
-                                productId: item.orderItems[0].productId,
                               })
                             }
                           >
@@ -139,7 +137,13 @@ export default function Orders() {
                           </button>
                           <button
                             className="btn btn-light orderscardbtn"
-                            onClick={() => handleCancel({ id: item._id })}
+                            onClick={() =>
+                              handleCancel({
+                                id: item._id,
+                                qty: item.orderItems[0].qty,
+                                productId: item.orderItems[0].productId,
+                              })
+                            }
                           >
                             Cancel
                           </button>
@@ -161,7 +165,13 @@ export default function Orders() {
                           </button>
                           <button
                             className="btn btn-light orderscardbtn"
-                            onClick={() => handleCancel({ id: item._id })}
+                            onClick={() =>
+                              handleCancel({
+                                id: item._id,
+                                qty: item.orderItems[0].qty,
+                                productId: item.orderItems[0].productId,
+                              })
+                            }
                           >
                             Cancel
                           </button>

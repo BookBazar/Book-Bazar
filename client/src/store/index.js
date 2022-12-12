@@ -8,6 +8,7 @@ import {
   UserInfoReducer,
   UpdateUserProfileReducer,
   UpdateUserPasswordReducer,
+  UserDetailsReducer
 } from "./reducers/authReducers";
 
 import {
@@ -67,6 +68,7 @@ const rootReducers = combineReducers({
   UserInfoReducer,
   UpdateUserProfileReducer,
   UpdateUserPasswordReducer,
+  UserDetailsReducer,
 
   CreateStoreReducer,
   CreateProductReducer,
@@ -143,4 +145,5 @@ const Store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middlewares))
 );
+
 export default Store;

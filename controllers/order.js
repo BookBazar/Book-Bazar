@@ -1,6 +1,7 @@
 const orderModel = require("../models/Order");
 const productModel = require("../models/Product");
 const printingModel = require("../models/PrintingOrder");
+const userModel = require("../models/User");
 
 /**
  * @description Add Order Item
@@ -25,6 +26,14 @@ module.exports.addOrderItems = async (req, res) => {
           paymentMethod,
         });
         createdOrders.push(createdOrder);
+
+        const seller = await productModel.findOne({
+          _id: { $eq: orderItems[i].productId },
+        });
+        if (seller.quantity >= orderItems[i].qty) {
+          seller.quantity = seller.quantity - orderItems[i].qty;
+          await seller.save();
+        }
       }
       return res.status(200).json(createdOrders);
     } catch (error) {
@@ -121,8 +130,9 @@ module.exports.getOrder = async (req, res) => {
   const { id } = req.params;
 
   const order = await orderModel.find({ _id: { $eq: id } });
+  const user = await userModel.findOne({ _id: order[0].user });
   if (!order) return res.status(401).json({ msg: "Something went wrong" });
-  return res.status(200).json({ order });
+  return res.status(200).json({ order, user });
 };
 
 /**
@@ -145,7 +155,6 @@ module.exports.getPrintingOrder = async (req, res) => {
  */
 module.exports.approveOrder = async (req, res) => {
   const { id } = req.params;
-  const { qty, productId } = req.body;
 
   await orderModel.updateOne(
     { _id: { $eq: id } },
@@ -157,11 +166,6 @@ module.exports.approveOrder = async (req, res) => {
     }
   );
 
-  const seller = await productModel.findOne({ _id: { $eq: productId } });
-  if (seller.quantity >= qty) {
-    seller.quantity = seller.quantity - qty;
-    await seller.save();
-  }
   res.status(200).json({ success: true });
 };
 
@@ -191,6 +195,8 @@ module.exports.approvePrintingOrder = async (req, res) => {
  */
 module.exports.cancelOrder = async (req, res) => {
   const { id } = req.params;
+  const { productId, qty } = req.body;
+
   await orderModel.updateOne(
     { _id: { $eq: id } },
     {
@@ -200,6 +206,15 @@ module.exports.cancelOrder = async (req, res) => {
       isComplete: false,
     }
   );
+
+  const seller = await productModel.findOne({
+    _id: { $eq: productId },
+  });
+  if (seller.quantity >= qty) {
+    seller.quantity = seller.quantity + qty;
+    await seller.save();
+  }
+
   res.status(200).json({ success: true });
 };
 

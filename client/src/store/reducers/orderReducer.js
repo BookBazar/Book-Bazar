@@ -63,6 +63,7 @@ const initialState = {
   printingOrder: [],
   printingOrders: [],
   errors: [],
+  userDetail: {}
 };
 
 export const CreateOrderReducer = (state = initialState, action) => {
@@ -166,7 +167,8 @@ export const FetchOrderReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       success: true,
-      order: payload,
+      order: payload.order,
+      userDetail: payload.user,
       errors: [],
     };
   } else if (FETCH_ORDER_FAIL) {

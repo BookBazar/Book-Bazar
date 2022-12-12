@@ -39,7 +39,6 @@ const productSchema = new mongoose.Schema({
   },
   isbn: {
     type: String,
-    required: true,
   },
   image: {
     type: String,

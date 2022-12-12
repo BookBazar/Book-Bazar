@@ -432,3 +432,9 @@ module.exports.getAllPrintingPress = async (req, res) => {
   if(!printingPress) return res.status(401).json({ msg: "Something went wrong" })
   return res.status(200).json({printingPress})  
 }
+
+/**
+ * @description Get Printing press stores
+ * @route GET /api/seller/get-all-printing-press
+ * @access Private
+ */

@@ -7,6 +7,7 @@ import { Link, Route } from "react-router-dom";
 
 //styles and components
 import Sidebar from "../Sidebar/Sidebar";
+import Rating from "../../../components/Rating/Rating";
 import Loader from "../../../components/Loader/Loader";
 import { storeList } from "../../../store/methods/adminMethods";
 import Search from "../../../components/Search/Search";
@@ -100,6 +101,10 @@ export default function StoreList({ match }) {
                   <div className="item_content">
                     <h2>{item.storeName}</h2>
                     <h3>{item.address}</h3>
+                    <Rating
+                      value={item.rating}
+                      text={`${item.numReviews} reviews`}
+                    />
                   </div>
                   <Link className="btn" to={`/list-details/${item._id}`}>
                     View Details

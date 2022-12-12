@@ -3,16 +3,16 @@ import React, { useEffect } from "react";
 //Dependencies
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import Loader from "../../../components/Loader/Loader";
 
 //Styles and components
+import Loader from "../../../components/Loader/Loader";
 import { getOrder } from "../../../store/methods/orderMethods";
 
 export default function Detail() {
-  const { order, loading } = useSelector((state) => state.FetchOrderReducer);
+  const { order, userDetail, loading } = useSelector((state) => state.FetchOrderReducer);
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  
   //Fetch Order
   useEffect(() => {
     dispatch(getOrder(id));
@@ -38,6 +38,10 @@ export default function Detail() {
               <h3>{item.orderItems[0].bookName}</h3>
               <p className="product_price">
                 Price: PKR {item.orderItems[0].price}
+              </p>
+              <h3>User Contact Info</h3>
+              <p className="product_description">
+                Email: {userDetail.email}
               </p>
             </div>
             <div className="product_CTA">

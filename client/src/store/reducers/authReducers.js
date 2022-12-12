@@ -1,6 +1,9 @@
 import jwt_decode from "jwt-decode";
 
 import {
+  FETCH_USER_DETAILS_FAIL,
+  FETCH_USER_DETAILS_REQUEST,
+  FETCH_USER_DETAILS_SUCCESS,
   GET_USER_INFO_FAIL,
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
@@ -28,6 +31,7 @@ const initialState = {
   errors: [],
   username: "",
   isSeller: false,
+  userDetail: {}
 };
 
 const verifyToken = (token) => {
@@ -149,6 +153,24 @@ export const UpdateUserPasswordReducer = (state = initialState, action) => {
       success: true,
     };
   } else if (type === UPDATE_USER_PASSWORD_FAIL) {
+    return { ...state, loading: false, success: false, errors: payload };
+  } else {
+    return state;
+  }
+};
+
+export const UserDetailsReducer = (state = initialState, action) => {
+  const { type, payload } = action;
+  if (type === FETCH_USER_DETAILS_REQUEST) {
+    return { ...state, loading: true };
+  } else if (type === FETCH_USER_DETAILS_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+      success: true,
+      userDetail: payload
+    };
+  } else if (type === FETCH_USER_DETAILS_FAIL) {
     return { ...state, loading: false, success: false, errors: payload };
   } else {
     return state;

@@ -152,11 +152,7 @@ module.exports.updatePassword = async (req, res) => {
         try {
           const salt = await bcrypt.genSalt(10);
           const hash = await bcrypt.hash(password, salt);
-         await userModel.updateOne(
-            { _id },
-            { password: hash },
-            { new: true }
-          );
+          await userModel.updateOne({ _id }, { password: hash }, { new: true });
           return res.status(200).json({ msg: "Password updated succesfully" });
         } catch (error) {
           return res.status(500).json({ errors });
@@ -166,4 +162,19 @@ module.exports.updatePassword = async (req, res) => {
       return res.status(400).json({ errors: [{ msg: "User not found" }] });
     }
   }
+};
+
+/**
+ * @description Get User details
+ * @route GET /api/user/user-details/:id
+ * @access Public
+ */
+module.exports.getUserDetails = async (req, res) => {
+  const { id } = req.params;
+  console.log(id)
+  const user = await userModel.findOne({ _id: id });
+  if (!user) {
+    return res.status(404).json({ msg: "Something went wrong" });
+  }
+  return res.status(201).json(user);
 };

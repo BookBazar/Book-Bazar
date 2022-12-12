@@ -174,7 +174,7 @@ export const getOrder = (id) => {
     dispatch({ type: FETCH_ORDER_REQUEST });
     try {
       const { data } = await axios.get(`/api/order/get-order/${id}`, config);
-      dispatch({ type: FETCH_ORDER_SUCCESS, payload: data.order });
+      dispatch({ type: FETCH_ORDER_SUCCESS, payload: data });
     } catch (error) {
       console.log(error);
       dispatch({
@@ -212,7 +212,7 @@ export const getPrintingOrder = (id) => {
   };
 };
 
-export const approveOrder = (data) => {
+export const approveOrder = (id) => {
   return async (dispatch, getState) => {
     const {
       LoginReducer: { token },
@@ -223,9 +223,8 @@ export const approveOrder = (data) => {
       },
     };
     dispatch({ type: APPROVE_ORDER_REQUEST });
-    console.log(data.qty);
     try {
-      await axios.put(`/api/order/approve-order/${data.id}`, data, config);
+      await axios.put(`/api/order/approve-order/${id}`, config);
       dispatch({ type: APPROVE_ORDER_SUCCESS });
     } catch (error) {
       console.log(error);
@@ -261,7 +260,7 @@ export const approvePrintingOrder = (id) => {
   };
 };
 
-export const cancelOrder = (id) => {
+export const cancelOrder = (data) => {
   return async (dispatch, getState) => {
     const {
       LoginReducer: { token },
@@ -273,7 +272,7 @@ export const cancelOrder = (id) => {
     };
     dispatch({ type: CANCEL_ORDER_REQUEST });
     try {
-      await axios.put(`/api/order/cancel-order/${id}`, config);
+      await axios.put(`/api/order/cancel-order/${data.id}`, data, config);
       dispatch({ type: CANCEL_ORDER_SUCCESS });
     } catch (error) {
       console.log(error);

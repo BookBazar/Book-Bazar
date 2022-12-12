@@ -15,6 +15,9 @@ import {
   UPDATE_USER_PASSWORD_REQUEST,
   UPDATE_USER_PASSWORD_SUCCESS,
   UPDATE_USER_PASSWORD_FAIL,
+  FETCH_USER_DETAILS_REQUEST,
+  FETCH_USER_DETAILS_FAIL,
+  FETCH_USER_DETAILS_SUCCESS,
 } from "../constants/authConstants";
 
 export const userRegister = (info) => {
@@ -90,7 +93,7 @@ export const updateUserProfile = (info) => {
     };
     try {
       dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
-      await axios.put("/api/user/update-profile", info, config);
+      await axios.put("/api/user/profileupdate-", info, config);
       dispatch({ type: UPDATE_USER_PROFILE_SUCCESS });
     } catch (error) {
       console.log(error);
@@ -122,6 +125,25 @@ export const updateUserPassword = (info) => {
         type: UPDATE_USER_PASSWORD_FAIL,
         payload: error.response.data.errors,
       });
+    }
+  };
+};
+
+export const userDetails = (id) => {
+  return async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    console.log(id)
+    try {
+      dispatch({ type: FETCH_USER_DETAILS_REQUEST });
+      const { data } = await axios.get(`/api/user/user-details/${id}`, config);
+      dispatch({ type: FETCH_USER_DETAILS_SUCCESS, payload: data.user });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: FETCH_USER_DETAILS_FAIL, payload: error.response.data.errors });
     }
   };
 };
