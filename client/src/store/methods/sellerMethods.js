@@ -82,6 +82,7 @@ export const createProduct = (info) => {
     };
     try {
       dispatch({ type: CREATE_PRODUCT_REQUEST });
+      console.log(info);
       const { data } = await axios.post(
         "/api/seller/create-product",
         info,
@@ -236,6 +237,7 @@ export const editStore = (info) => {
     };
     try {
       dispatch({ type: EDIT_PRODUCT_REQUEST });
+      console.log(typeof(info.tags))
       await axios.put(`/api/seller/edit-product/${info.id}`, info, config);
       dispatch({ type: EDIT_PRODUCT_SUCCESS });
     } catch (error) {

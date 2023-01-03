@@ -62,6 +62,10 @@ export default function CreateProduct({ history }) {
     }
   }, [success, history]);
 
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(

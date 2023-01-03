@@ -114,6 +114,7 @@ exports.addProduct = async (req, res) => {
   const { _id } = req.user;
 
   const errors = validationResult(req);
+  console.log(req.body)
 
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -257,6 +258,7 @@ module.exports.editProductValidations = [
   body("category").not().isEmpty().trim().withMessage("Category is required"),
   body("quantity").not().isEmpty().trim().withMessage("Quantity is required"),
   body("edition").not().isEmpty().trim().withMessage("Edition is required"),
+  body("tags").not().isEmpty().trim().withMessage("Tags is required"),
 ];
 exports.editProduct = async (req, res) => {
   const {
@@ -270,8 +272,12 @@ exports.editProduct = async (req, res) => {
     description,
     edition,
     isbn,
+    tags,
   } = req.body;
   const { id } = req.params;
+
+  console.log(req.body);
+  console.log("ID = ", id);
 
   const errors = validationResult(req);
 
@@ -292,6 +298,7 @@ exports.editProduct = async (req, res) => {
           description,
           isbn,
           edition,
+          tags,
         },
         { new: true }
       );
@@ -328,7 +335,7 @@ exports.getStores = async (req, res) => {
       }
     : {};
 
-    try {
+  try {
     const booksExist = await productSchema.find({ ...keyword });
     let userIds = [];
     if (booksExist.length !== 0) {
@@ -338,7 +345,12 @@ exports.getStores = async (req, res) => {
     }
 
     const stores = await sellerModel
-      .find({ user: { $in: userIds }, isApproved: true, isBlocked: false, storeType: "book" })
+      .find({
+        user: { $in: userIds },
+        isApproved: true,
+        isBlocked: false,
+        storeType: "book",
+      })
       .sort({ updatedAt: -1 });
     return res.status(200).json({ stores });
   } catch (error) {
@@ -428,10 +440,15 @@ module.exports.isAlreadyReviewed = async (req, res) => {
  * @access Private
  */
 module.exports.getAllPrintingPress = async (req, res) => {
-  const printingPress = await sellerModel.find({storeType: "printing", isApproved: true, isBlocked: false})
-  if(!printingPress) return res.status(401).json({ msg: "Something went wrong" })
-  return res.status(200).json({printingPress})  
-}
+  const printingPress = await sellerModel.find({
+    storeType: "printing",
+    isApproved: true,
+    isBlocked: false,
+  });
+  if (!printingPress)
+    return res.status(401).json({ msg: "Something went wrong" });
+  return res.status(200).json({ printingPress });
+};
 
 /**
  * @description Get Printing press stores

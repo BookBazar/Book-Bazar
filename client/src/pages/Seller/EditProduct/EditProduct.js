@@ -22,12 +22,15 @@ export default function EditProduct() {
   const [edition, setEdition] = useState(0.0);
   const [isbn, setIsbn] = useState("");
   const [image, setImage] = useState("");
+  const [tags, setTags] = useState("");
 
   const dispatch = useDispatch();
   const { specificProduct } = useSelector((state) => state.FetchProductReducer);
   const { loading, success, errors } = useSelector(
     (state) => state.EditProductReducer
   );
+
+  console.log(specificProduct);
 
   const { id } = useParams();
 
@@ -45,6 +48,7 @@ export default function EditProduct() {
     setDescription(specificProduct.description);
     setIsbn(specificProduct.isbn);
     setEdition(specificProduct.edition);
+    setTags(specificProduct.tags)
   }, [dispatch, specificProduct, id]);
 
   //Image Upload Functionality
@@ -81,6 +85,10 @@ export default function EditProduct() {
     }
   }, [success]);
 
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
+
   //Edit Book
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -97,6 +105,7 @@ export default function EditProduct() {
         description,
         isbn,
         edition,
+        tags,
       })
     );
   };
@@ -214,6 +223,17 @@ export default function EditProduct() {
                         <option value="Argumentatives">Argumentatives</option>
                         <option value="Others">Others</option>
                       </select>
+                    </div>
+                    <div className="group">
+                      <label htmlFor="tags">Tags (Comma Seperated)</label>
+                      <input
+                        type="text"
+                        id="tags"
+                        className="group__control"
+                        placeholder="Enter Tags"
+                        onChange={(e) => setTags(e.target.value.split(","))}
+                        value={tags}
+                      />
                     </div>
                     <div className="group">
                       <label htmlFor="category">Condition</label>

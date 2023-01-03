@@ -20,8 +20,6 @@ export default function Sidebar() {
   const { username, isSeller } = useSelector((state) => state.UserInfoReducer);
   const { specificStore } = useSelector((state) => state.FetchStoreReducer);
 
-  console.log(specificStore);
-
   const dispatch = useDispatch();
 
   const logout = () => {
