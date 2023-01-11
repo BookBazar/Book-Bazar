@@ -40,7 +40,7 @@ export default function ViewProducts({ match }) {
   };
 
   return (
-    <div className="container_admin">
+    <div className="container_admin" style={{'marginLeft': '4rem'}}>
       <Toaster
         position="bottom-center"
         reverseOrder={false}
@@ -54,7 +54,7 @@ export default function ViewProducts({ match }) {
       <div className="sidebar_panel">
         <Sidebar />
       </div>
-      <div className="content_panel">
+      <div className="content_panel" style={{"marginTop": "2rem"}}>
         <Route
           render={({ history }) => (
             <Search

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 //Depedencies
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 //Styles and components
@@ -38,31 +38,31 @@ export default function Navbar() {
 
         <div className="menu">
           <li>
-            <Link to="/printing-homepage">
+            <NavLink to="/printing-homepage">
               <div className="links">Printing Press</div>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/my-orders">
+            <NavLink to="/my-orders">
               <div className="links">My Orders</div>
-            </Link>
+            </NavLink>
           </li>
           <li>
             <span style={{ marginRight: "0.5rem" }}>
               <BsFillCartFill />
             </span>
-            <Link to="/cart">Cart</Link>
+            <NavLink to="/cart">Cart</NavLink>
           </li>
           {!isSeller && (
             <li>
-              <Link to="/seller-form">Become a Seller</Link>
+              <NavLink to="/seller-form">Become a Seller</NavLink>
             </li>
           )}
           {user && (
             <li>
-              <Link to="/setting">
+              <NavLink to="/setting">
                 <div className="links">{username}</div>
-              </Link>
+              </NavLink>
             </li>
           )}
           <li>

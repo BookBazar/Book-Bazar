@@ -87,7 +87,7 @@ export default function StoreDetails({ history }) {
   };
 
   return (
-    <div className="container_admin">
+    <div className="container_admin" style={{ marginLeft: "3rem" }}>
       <Toaster
         position="bottom-center"
         reverseOrder={false}

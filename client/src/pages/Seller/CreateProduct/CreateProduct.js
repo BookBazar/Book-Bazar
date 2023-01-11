@@ -65,7 +65,7 @@ export default function CreateProduct({ history }) {
   useEffect(() => {
     console.log(tags);
   }, [tags]);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -86,7 +86,7 @@ export default function CreateProduct({ history }) {
   };
 
   return (
-    <div className="container_admin">
+    <div className="container_admin" style={{ marginLeft: "3rem" }}>
       <Toaster
         position="bottom-center"
         reverseOrder={false}

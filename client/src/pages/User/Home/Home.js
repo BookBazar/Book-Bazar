@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import "./Home.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import Loader from "../../../components/Loader/Loader";
+import Footer from "../../../components/Footer/Footer";
 import { getStores } from "../../../store/methods/sellerMethods";
 import Rating from "../../../components/Rating/Rating";
 // import Search from "../../../components/Search/Search";
@@ -35,44 +36,31 @@ export default function Home({ match }) {
               <h1 className="webmaintitle">BOOKBAZAR</h1>
               <h3 style={{ fontSize: "1.5rem" }}>Urdu Bazar in Your Hands</h3>
             </div>
-            <div className="ttp">
-              <h3>Welcome to BookBazar! Please enter details</h3>
-            </div>
           </div>
         </div>
 
-        <div
-          style={{ display: "flex", width: "100%", justifyContent: "center" }}
-        >
-          {/* Search */}
-          <div className="home_search">
-            <div className="content_panel">
-              <div className="form_container">
-                <div className="row ml-minus-15 mr-minus-15">
-                  <div className="col-6 p-15">
-                    <div className="create_card">
-                      <div className="group">
-                        <input
-                          type="text"
-                          naem="q"
-                          className="group__control"
-                          placeholder="Search"
-                          onChange={(e) => setKeyword(e.target.value)}
-                        />
-                        <button
-                          type="submit"
-                          className="btn"
-                          style={{ marginLeft: "1rem" }}
-                        >
-                          Search
-                        </button>
-                      </div>
-                    </div>
-                    <span></span>
-                  </div>
-                </div>
+        {/* Search */}
+        <div className="home_search">
+          <div className="col-6 ">
+            <div className="">
+              <div className="">
+                <input
+                  type="text"
+                  naem="q"
+                  className="group__control"
+                  placeholder="Search"
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="btn"
+                  style={{ marginLeft: "1rem" }}
+                >
+                  Search
+                </button>
               </div>
             </div>
+            <span></span>
           </div>
         </div>
 
@@ -101,6 +89,7 @@ export default function Home({ match }) {
             </div>
           </>
         )}
+        <Footer />
       </>
     </>
   );

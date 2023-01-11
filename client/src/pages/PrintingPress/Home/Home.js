@@ -30,10 +30,7 @@ export default function Home() {
             <div className="weblogintop">
               <h1 className="webmaintitle">BOOKBAZAR</h1>
               <h3 style={{ fontSize: "1.5rem" }}>Urdu Bazar in Your Hands</h3>
-            </div>
-            <div className="ttp">
-              <h3>Welcome to BookBazar! Please enter details</h3>
-            </div>
+            </div>       
           </div>
         </div>
 

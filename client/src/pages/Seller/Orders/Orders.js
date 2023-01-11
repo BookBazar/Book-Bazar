@@ -14,7 +14,7 @@ import {
   completeOrder,
 } from "../../../store/methods/orderMethods";
 
-export default function Orders() {
+export default function Orders({ history }) {
   const [orderType, setOrderType] = useState("pending");
   const { orders } = useSelector((state) => state.FetchOrdersReducer);
   const dispatch = useDispatch();
@@ -119,12 +119,12 @@ export default function Orders() {
                       </div>
                       {item.isPending === true && (
                         <div className="order_item_btn">
-                          <Link
+                          <button
                             className="btn btn-light orderscardbtn"
-                            to={`/order-detail/${item._id}`}
+                            onClick={() => {history.push(`/order-detail/${item._id}`)}}
                           >
                             View
-                          </Link>
+                          </button>
                           <button
                             className="btn btn-light orderscardbtn"
                             onClick={() =>
@@ -151,12 +151,12 @@ export default function Orders() {
                       )}
                       {item.isApproved === true && (
                         <div className="order_item_btn">
-                          <Link
+                          <button
                             className="btn btn-light orderscardbtn"
-                            to={`/order-detail/${item._id}`}
+                            onClick={() => {history.push(`/order-detail/${item._id}`)}}
                           >
                             View
-                          </Link>
+                          </button>
                           <button
                             className="btn btn-light orderscardbtn"
                             onClick={() => handleComplete({ id: item._id })}

@@ -84,41 +84,35 @@ export default function Products() {
             <h3 style={{ fontSize: "1.5rem" }}>{userStore.contact}</h3>
           </div>
           <div className="ttp">
-            <h3>{userStore.address}</h3>
+            <a href={userStore.location}>{userStore.address}</a>
           </div>
         </div>
       </div>
 
       {/* Search */}
       <div className="home_search">
-        <div className="content_panel">
-          <div className="form_container">
-            <div className="row ml-minus-15 mr-minus-15">
-              <div className="col-6 p-15">
-                <div className="create_card">
-                  <div className="group">
-                    <input
-                      type="text"
-                      naem="q"
-                      className="group__control"
-                      placeholder="Search"
-                      onChange={(e) => setKeyword(e.target.value)}
-                    />
-                    <button
-                      type="submit"
-                      className="btn"
-                      style={{ marginLeft: "1rem" }}
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
-                <span></span>
+          <div className="col-6 ">
+            <div className="">
+              <div className="">
+                <input
+                  type="text"
+                  naem="q"
+                  className="group__control"
+                  placeholder="Search"
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+                <button
+                  type="submit"
+                  className="btn"
+                  style={{ marginLeft: "1rem" }}
+                >
+                  Search
+                </button>
               </div>
             </div>
+            <span></span>
           </div>
         </div>
-      </div>
 
       <div className="product_container">
         <Toaster
@@ -184,7 +178,10 @@ export default function Products() {
           )}
         </div>
         {specificStoreOrders.length !== 0 ? (
-          <div className="products_reviews">
+          <div
+            className="products_reviews"
+            style={{ position: "sticky", top: "0px" }}
+          >
             <p className="product_status">
               <div className="group">
                 <label htmlFor="email" style={{ fontSize: "1.5rem" }}>

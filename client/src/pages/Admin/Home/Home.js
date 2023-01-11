@@ -31,7 +31,7 @@ export default function Home({ match }) {
   }, [dispatch, keyword]);
 
   return (
-    <div className="container_admin">
+    <div className="container_admin" style={{ marginLeft: "3rem" }}>
       <Toaster
         position="bottom-center"
         reverseOrder={false}
@@ -45,10 +45,14 @@ export default function Home({ match }) {
       <div className="sidebar_panel">
         <Sidebar />
       </div>
-      <div className="content_panel">
+      <div className="content_panel" style={{ marginTop: "2rem" }}>
         <Route
           render={({ history }) => (
-            <Search history={history} redirect="admin-store-request" search='store-request-search'/>
+            <Search
+              history={history}
+              redirect="admin-store-request"
+              search="store-request-search"
+            />
           )}
         />
         {!loading ? (

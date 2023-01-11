@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
+import toast, { Toaster } from "react-hot-toast";
 
 //Styles and components
 import "./Details.css";
@@ -27,9 +28,10 @@ export default function Detail({ history }) {
   };
 
   const addToCartHandler = (e) => {
-    e.preventDefault()
-    dispatch(addToCart(id, qty))
-  }
+    e.preventDefault();
+    dispatch(addToCart(id, qty));
+    toast.success("Item added to cart")
+  };
 
   return (
     <>
@@ -38,6 +40,16 @@ export default function Detail({ history }) {
       </div>
 
       <div className="product_main">
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+          toastOptions={{
+            className: "",
+            style: {
+              fontSize: "14px",
+            },
+          }}
+        />
         <Link className="btn" to="/homepage">
           Go Back
         </Link>
@@ -100,7 +112,7 @@ export default function Detail({ history }) {
                   </select>
                 </div>
               )}
-              <div>
+              <div className="coa-btn-container">
                 <button
                   onClick={buyNowHandler}
                   className={

@@ -63,7 +63,8 @@
   max-height: 18rem;
   box-shadow: 0 10px 20px 1px grey;
   margin-left: 3rem;
-  padding: 2rem 20rem 2rem 2rem;
+  padding: 2rem 4rem;
+  border-radius: 10px;
 }
 .product_status {
   display: flex;
@@ -83,6 +84,11 @@
 }
 .btn_status {
   font-size: 1.5rem;
+  margin-top: 1rem;
+}
+.coa-btn-container{
+  display: flex;
+  justify-content: space-around;
   margin-top: 1rem;
 }
 

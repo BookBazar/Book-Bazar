@@ -111,7 +111,7 @@ export default function Summary({ history }) {
                       </div>
                       <div className="summary_item_name">
                         <Link to={`/details/${item.productId}`}>
-                          {item.name}
+                          {item.bookName}
                         </Link>
                       </div>
                       <div className="summary_item_price">
@@ -121,32 +121,36 @@ export default function Summary({ history }) {
                   ))}
             </div>
           </div>
-          <div className="summary_calculation">
-            <h2 className="summary_title_h2">Order Summary</h2>
-            <div className="summary_calculation_styles">
-              <span>Items</span>
-              <span>PKR {cart.itemsPrice}</span>
-            </div>
-            <div className="summary_calculation_styles">
-              <span>Shipping</span>
-              <span>PKR {cart.shippingPrice}</span>
-            </div>
-            <div className="summary_calculation_styles">
-              <span>Tax</span>
-              <span>PKR {cart.taxPrice}</span>
-            </div>
-            <div className="summary_calculation_styles">
-              <span>Total</span>
-              <span>PKR {cart.totalPrice}</span>
-            </div>
-            <div className="summary_calculation_btn">
-              <button
-                className="btn btn_status"
-                onClick={placeOrderHandler}
-                type="submit"
-              >
-                PLACE ORDER
-              </button>
+          <div className="product_CTA" style={{'maxHeight': '22rem'}}>
+            <div className="product_status">
+              <div className="group">
+                <h2 className="summary_title_h2">Order Summary</h2>
+                <div className="summary_calculation_styles">
+                  <span>Items</span>
+                  <span>PKR {cart.itemsPrice}</span>
+                </div>
+                <div className="summary_calculation_styles">
+                  <span>Shipping</span>
+                  <span>PKR {cart.shippingPrice}</span>
+                </div>
+                <div className="summary_calculation_styles">
+                  <span>Tax</span>
+                  <span>PKR {cart.taxPrice}</span>
+                </div>
+                <div className="summary_calculation_styles">
+                  <span>Total</span>
+                  <span>PKR {cart.totalPrice}</span>
+                </div>
+                <div className="summary_calculation_btn">
+                  <button
+                    className="btn btn_status"
+                    onClick={placeOrderHandler}
+                    type="submit"
+                  >
+                    PLACE ORDER
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

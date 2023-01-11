@@ -22,23 +22,28 @@
 .summary_item_container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.7rem;
 }
 .summary_item_image {
   width: 10%;
 }
 .summary_item_image img {
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 15%;
   box-shadow: 0 10px 20px 1px grey;
 }
 .summary_item_name {
   width: 30%;
+  font-weight: 600;
+  font-size: 1rem;
 }
 .summary_item_price {
   width: 30%;
+  font-weight: 500;
+  font-size: 1rem;
 }
 .summary_calculation {
   width: 20%;
@@ -46,5 +51,10 @@
 .summary_calculation_styles {
   display: flex;
   justify-content: space-between;
-  font-size: 1.3rem;
+}
+.summary_calculation_styles span{
+  font-size: 1.5rem;
+}
+.summary_calculation_styles span:first-child{
+  font-weight: 500;
 }

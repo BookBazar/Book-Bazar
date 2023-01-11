@@ -18,7 +18,6 @@ export default function Search({ history, redirect, search }) {
         <form onSubmit={handleSubmit}>
           <div className="row ml-minus-15 mr-minus-15">
             <div className="col-6 p-15">
-              <div className="create_card">
                 <div className="group">
                   <input
                     type="text"
@@ -38,7 +37,6 @@ export default function Search({ history, redirect, search }) {
               </div>
               <span></span>
             </div>
-          </div>
         </form>
       </div>
     </div>
